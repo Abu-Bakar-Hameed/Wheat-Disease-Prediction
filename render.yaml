@@ -1,0 +1,60 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# WheatGuard AI – Render Blueprint (backend only)
+#
+# Deploys the FastAPI + PyTorch backend from back/Dockerfile as a persistent
+# web service. This is NOT something Vercel can host (serverless 500 MB cap,
+# read-only FS, no background process) — see back/README notes.
+#
+# How to use:
+#   1. Push this file to GitHub.
+#   2. In Render: New + → Blueprint → pick this repo → it auto-detects render.yaml.
+#   3. On the "global / service env" screen, fill the Secret values marked below
+#      (they are NOT stored in this file — you paste them once in the dashboard).
+#   4. After deploy, copy the live URL and set it as:
+#        - NEXT_PUBLIC_API_URL in your Vercel `front` project
+#        - ALLOWED_ORIGINS here (so CORS lets the frontend call the API)
+#
+# ⚠️ MEMORY: PyTorch CPU inference needs ~1.5–2 GB RAM. The `free`/`starter`
+#    (512 MB) instances will OOM. Keep `plan: standard` (2 GB / 1 CPU) or
+#    higher for reliable predictions. If cost matters, Railway or Fly.io give a
+#    2 GB machine more cheaply and run the same Dockerfile.
+# ─────────────────────────────────────────────────────────────────────────────
+
+services:
+  - type: web
+    name: wheatguard-backend
+    runtime: docker
+    dockerfilePath: ./back/Dockerfile
+    dockerContext: ./back
+    plan: standard # 2 GB RAM — required for torch inference; do NOT use free
+    healthCheckPath: /health
+    region: oregon # change to your nearest region (e.g. singapore, frankfurt)
+
+    envVars:
+      # Non-secret runtime config
+      - key: APP_ENV
+        value: production
+      - key: DEBUG
+        value: "false"
+      # Update this to your deployed Vercel domain after the frontend is live,
+      # e.g. ["https://your-app.vercel.app"]
+      - key: ALLOWED_ORIGINS
+        value: '["http://localhost:3000"]'
+
+      # ── Secrets: paste values in the Render dashboard (never committed) ──
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        secret: true
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        secret: true
+      - key: JWT_SECRET
+        secret: true
+      - key: OPENROUTER_API_KEY
+        secret: true
+      - key: INTERNAL_API_SECRET
+        secret: true
+      # Point this at wherever you host the Node auth/ service (Render/Railway),
+      # e.g. https://wheatguard-auth.onrender.com  — leave unset until auth is deployed.
+      - key: AUTH_BACKEND_URL
+        sync: false
