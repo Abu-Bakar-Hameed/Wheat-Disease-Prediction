@@ -550,7 +550,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         headers: { "X-Admin-Secret-Key": resolvedSecret },
         body: JSON.stringify({
           email: email.trim().toLowerCase(),
-          password,
+          // Trim to match the email/secret handling above. The static admin
+          // password has no surrounding whitespace, so a stray leading/trailing
+          // space from copy-paste or browser autofill would otherwise cause a
+          // confusing "Invalid email or password" 401.
+          password: password.trim(),
         }),
       });
       applySession(data);

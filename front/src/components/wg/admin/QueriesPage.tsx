@@ -20,7 +20,8 @@ import {
   adminAddNote, adminAssignableAdmins, adminGetQuery, adminListQueries,
   adminQueryStats, adminReplyToQuery, adminUpdateQuery,
 } from "@/lib/supportApi";
-import { inputCls, SearchBar, Sk, useLoad } from "./ui";
+import { SearchBar, Sk, useLoad } from "./ui";
+import { SelectMenu } from "@/components/wg/ui";
 
 const STATUS_META: Record<SupportStatus, { label: string; cls: string }> = {
   new:           { label: "New",            cls: "bg-info-soft text-[#1e40af] dark:text-blue-300" },
@@ -117,27 +118,57 @@ export function QueriesPage() {
           </button>
         </div>
         <div className="flex flex-wrap gap-2">
-          <select className={`${inputCls} !w-auto text-[13px]`} value={status} onChange={(e) => { setPage(1); setStatus(e.target.value); }}>
-            <option value="">All statuses</option>
-            {Object.entries(STATUS_META).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
-          </select>
-          <select className={`${inputCls} !w-auto text-[13px]`} value={priority} onChange={(e) => { setPage(1); setPriority(e.target.value); }}>
-            <option value="">All priorities</option>
-            {Object.entries(PRIORITY_META).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
-          </select>
-          <select className={`${inputCls} !w-auto text-[13px]`} value={category} onChange={(e) => { setPage(1); setCategory(e.target.value); }}>
-            <option value="">All categories</option>
-            {SUPPORT_CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
-          </select>
-          <select className={`${inputCls} !w-auto text-[13px]`} value={assigned} onChange={(e) => { setPage(1); setAssigned(e.target.value); }}>
-            <option value="">Any assignee</option>
-            {admins.map((a) => <option key={a.id} value={a.id}>{a.name || a.email}</option>)}
-          </select>
-          <select className={`${inputCls} !w-auto text-[13px]`} value={sort} onChange={(e) => { setPage(1); setSort(e.target.value); }}>
-            <option value="last_message_at">Latest activity</option>
-            <option value="created_at">Newest created</option>
-            <option value="priority">Priority</option>
-          </select>
+          <SelectMenu
+            ariaLabel="Filter by status"
+            className="w-full sm:w-44"
+            value={status}
+            onChange={(v) => { setPage(1); setStatus(v); }}
+            options={[
+              { value: "", label: "All statuses" },
+              ...Object.entries(STATUS_META).map(([k, val]) => ({ value: k, label: val.label })),
+            ]}
+          />
+          <SelectMenu
+            ariaLabel="Filter by priority"
+            className="w-full sm:w-44"
+            value={priority}
+            onChange={(v) => { setPage(1); setPriority(v); }}
+            options={[
+              { value: "", label: "All priorities" },
+              ...Object.entries(PRIORITY_META).map(([k, val]) => ({ value: k, label: val.label })),
+            ]}
+          />
+          <SelectMenu
+            ariaLabel="Filter by category"
+            className="w-full sm:w-44"
+            value={category}
+            onChange={(v) => { setPage(1); setCategory(v); }}
+            options={[
+              { value: "", label: "All categories" },
+              ...SUPPORT_CATEGORIES.map((c) => ({ value: c, label: c })),
+            ]}
+          />
+          <SelectMenu
+            ariaLabel="Filter by assignee"
+            className="w-full sm:w-44"
+            value={assigned}
+            onChange={(v) => { setPage(1); setAssigned(v); }}
+            options={[
+              { value: "", label: "Any assignee" },
+              ...admins.map((a) => ({ value: a.id, label: a.name || a.email })),
+            ]}
+          />
+          <SelectMenu
+            ariaLabel="Sort by"
+            className="w-full sm:w-44"
+            value={sort}
+            onChange={(v) => { setPage(1); setSort(v); }}
+            options={[
+              { value: "last_message_at", label: "Latest activity" },
+              { value: "created_at", label: "Newest created" },
+              { value: "priority", label: "Priority" },
+            ]}
+          />
         </div>
       </div>
 
@@ -371,22 +402,39 @@ function QueryDetailDrawer({
             <div className="space-y-3">
               <div>
                 <label className="text-[11px] font-semibold text-ink block mb-1">Status</label>
-                <select className={`${inputCls} text-[12px] py-2`} value={query?.status ?? ""} onChange={(e) => patch({ status: e.target.value })}>
-                  {Object.entries(STATUS_META).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
-                </select>
+                <SelectMenu
+                  ariaLabel="Status"
+                  className="w-full"
+                  buttonClassName="h-9 text-[12px]"
+                  value={query?.status ?? ""}
+                  onChange={(v) => patch({ status: v })}
+                  options={Object.entries(STATUS_META).map(([k, val]) => ({ value: k, label: val.label }))}
+                />
               </div>
               <div>
                 <label className="text-[11px] font-semibold text-ink block mb-1">Priority</label>
-                <select className={`${inputCls} text-[12px] py-2`} value={query?.priority ?? ""} onChange={(e) => patch({ priority: e.target.value })}>
-                  {Object.entries(PRIORITY_META).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
-                </select>
+                <SelectMenu
+                  ariaLabel="Priority"
+                  className="w-full"
+                  buttonClassName="h-9 text-[12px]"
+                  value={query?.priority ?? ""}
+                  onChange={(v) => patch({ priority: v })}
+                  options={Object.entries(PRIORITY_META).map(([k, val]) => ({ value: k, label: val.label }))}
+                />
               </div>
               <div>
                 <label className="text-[11px] font-semibold text-ink block mb-1">Assigned to</label>
-                <select className={`${inputCls} text-[12px] py-2`} value={query?.assigned_admin_id ?? ""} onChange={(e) => patch({ assigned_admin_id: e.target.value || null })}>
-                  <option value="">Unassigned</option>
-                  {admins.map((a) => <option key={a.id} value={a.id}>{a.name || a.email}</option>)}
-                </select>
+                <SelectMenu
+                  ariaLabel="Assigned to"
+                  className="w-full"
+                  buttonClassName="h-9 text-[12px]"
+                  value={query?.assigned_admin_id ?? ""}
+                  onChange={(v) => patch({ assigned_admin_id: v || null })}
+                  options={[
+                    { value: "", label: "Unassigned" },
+                    ...admins.map((a) => ({ value: a.id, label: a.name || a.email })),
+                  ]}
+                />
               </div>
               {query?.category && (
                 <div>

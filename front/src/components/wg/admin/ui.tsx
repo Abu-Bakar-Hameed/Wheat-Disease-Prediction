@@ -76,18 +76,31 @@ export function ModalShell({
   title,
   onClose,
   children,
+  centered = false,
 }: {
   title: string;
   onClose: () => void;
   children: ReactNode;
+  /** Center the dialog on mobile instead of the default bottom-sheet. */
+  centered?: boolean;
 }) {
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 backdrop-blur-[2px] p-0 sm:items-center sm:p-4">
-      <div className="bg-white w-full max-w-lg shadow-2xl max-h-[92vh] sm:max-h-[90vh] rounded-t-2xl sm:rounded-2xl flex flex-col">
-        {/* Mobile drag handle (hidden on sm+ where the sheet is centered). */}
-        <div className="flex justify-center pt-2.5 sm:hidden" aria-hidden>
-          <span className="h-1 w-10 rounded-full bg-line" />
-        </div>
+    <div
+      className={`fixed inset-0 z-50 flex justify-center bg-black/50 backdrop-blur-[2px] ${
+        centered ? "items-center p-4" : "items-end p-0 sm:items-center sm:p-4"
+      }`}
+    >
+      <div
+        className={`bg-white w-full max-w-lg shadow-2xl max-h-[92vh] sm:max-h-[90vh] flex flex-col ${
+          centered ? "rounded-2xl" : "rounded-t-2xl sm:rounded-2xl"
+        }`}
+      >
+        {/* Mobile drag handle (only for the bottom-sheet variant). */}
+        {!centered && (
+          <div className="flex justify-center pt-2.5 sm:hidden" aria-hidden>
+            <span className="h-1 w-10 rounded-full bg-line" />
+          </div>
+        )}
         <div className="flex items-center justify-between px-4 py-4 sm:px-6 border-b border-line shrink-0">
           <h3 className="text-[16px] font-bold text-ink">{title}</h3>
           <button
@@ -213,6 +226,7 @@ export function ConfirmModal({
   onConfirm,
   onCancel,
   busy = false,
+  centered = false,
 }: {
   open: boolean;
   title: string;
@@ -222,11 +236,13 @@ export function ConfirmModal({
   onConfirm: () => void | Promise<void>;
   onCancel: () => void;
   busy?: boolean;
+  /** Center the dialog on mobile instead of the default bottom-sheet. */
+  centered?: boolean;
 }) {
   if (!open) return null;
 
   return (
-    <ModalShell title={title} onClose={busy ? () => {} : onCancel}>
+    <ModalShell title={title} onClose={busy ? () => {} : onCancel} centered={centered}>
       <div className="space-y-4">
         <p className="text-[14px] leading-relaxed text-ink">{message}</p>
         <div className="flex justify-end gap-2 pt-1">

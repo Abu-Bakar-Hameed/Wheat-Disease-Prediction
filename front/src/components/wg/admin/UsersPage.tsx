@@ -24,6 +24,7 @@ import {
   usePager,
   Sk,
 } from "./ui";
+import { SelectMenu } from "@/components/wg/ui";
 
 const ROLE_COLORS: Record<string, string> = {
   admin: "bg-warning-soft text-warning",
@@ -475,6 +476,7 @@ export function UsersPage() {
         onCancel={() =>
           setDeleteTarget(null)
         }
+        centered
       />
 
 
@@ -605,6 +607,7 @@ function UserModal({
           : "Add User"
       }
       onClose={onClose}
+      centered
     >
 
       {/* AVATAR PREVIEW (edit mode only) */}
@@ -668,54 +671,34 @@ function UserModal({
 
         <Field label="Role">
 
-          <select
-            className={inputCls}
+          <SelectMenu
+            ariaLabel="Role"
+            className="w-full"
             value={role}
-            onChange={(e) =>
-              setRole(e.target.value)
-            }
-          >
-
-            <option value="admin">
-              Admin
-            </option>
-
-            <option value="expert">
-              Expert
-            </option>
-
-            <option value="researcher">
-              Researcher
-            </option>
-
-            <option value="user">
-              User
-            </option>
-
-          </select>
+            onChange={(v) => setRole(v)}
+            options={[
+              { value: "admin", label: "Admin" },
+              { value: "expert", label: "Expert" },
+              { value: "researcher", label: "Researcher" },
+              { value: "user", label: "User" },
+            ]}
+          />
 
         </Field>
 
 
         <Field label="Status">
 
-          <select
-            className={inputCls}
+          <SelectMenu
+            ariaLabel="Status"
+            className="w-full"
             value={status}
-            onChange={(e) =>
-              setStatus(e.target.value)
-            }
-          >
-
-            <option value="active">
-              Active
-            </option>
-
-            <option value="inactive">
-              Inactive
-            </option>
-
-          </select>
+            onChange={(v) => setStatus(v)}
+            options={[
+              { value: "active", label: "Active" },
+              { value: "inactive", label: "Inactive" },
+            ]}
+          />
 
         </Field>
 

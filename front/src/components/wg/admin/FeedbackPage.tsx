@@ -29,6 +29,7 @@ import {
   inputCls, SearchBar, Sk, useLoad, ModalShell, PrimaryBtn, ConfirmModal,
 } from "./ui";
 import { RatingInline } from "@/components/wg/feedback/FeedbackForm";
+import { SelectMenu } from "@/components/wg/ui";
 import { FeedbackAnalyticsPanel } from "./FeedbackAnalytics";
 
 const STATUS_META: Record<FeedbackStatus, { label: string; cls: string }> = {
@@ -147,32 +148,68 @@ export function FeedbackPage() {
               </button>
             </div>
             <div className="flex flex-wrap gap-2">
-              <select className={`${inputCls} !w-auto text-[13px]`} value={status} onChange={(e) => { setPage(1); setStatus(e.target.value); }}>
-                <option value="">All statuses</option>
-                {Object.entries(STATUS_META).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
-              </select>
-              <select className={`${inputCls} !w-auto text-[13px]`} value={type} onChange={(e) => { setPage(1); setType(e.target.value); }}>
-                <option value="">All types</option>
-                {FEEDBACK_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
-              </select>
-              <select className={`${inputCls} !w-auto text-[13px]`} value={priority} onChange={(e) => { setPage(1); setPriority(e.target.value); }}>
-                <option value="">All priorities</option>
-                {Object.entries(PRIORITY_META).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
-              </select>
-              <select className={`${inputCls} !w-auto text-[13px]`} value={rating} onChange={(e) => { setPage(1); setRating(e.target.value); }}>
-                <option value="">Any rating</option>
-                {[5, 4, 3, 2, 1].map((n) => <option key={n} value={n}>{n}★</option>)}
-              </select>
-              <select className={`${inputCls} !w-auto text-[13px]`} value={assigned} onChange={(e) => { setPage(1); setAssigned(e.target.value); }}>
-                <option value="">Any assignee</option>
-                {admins.map((a) => <option key={a.id} value={a.id}>{a.name || a.email}</option>)}
-              </select>
-              <select className={`${inputCls} !w-auto text-[13px]`} value={sort} onChange={(e) => { setPage(1); setSort(e.target.value); }}>
-                <option value="created_at">Newest created</option>
-                <option value="updated_at">Recently updated</option>
-                <option value="priority">Priority</option>
-                <option value="rating">Rating</option>
-              </select>
+              <SelectMenu
+                ariaLabel="Filter by status"
+                className="w-full sm:w-40"
+                value={status}
+                onChange={(v) => { setPage(1); setStatus(v); }}
+                options={[
+                  { value: "", label: "All statuses" },
+                  ...Object.entries(STATUS_META).map(([k, val]) => ({ value: k, label: val.label })),
+                ]}
+              />
+              <SelectMenu
+                ariaLabel="Filter by type"
+                className="w-full sm:w-40"
+                value={type}
+                onChange={(v) => { setPage(1); setType(v); }}
+                options={[
+                  { value: "", label: "All types" },
+                  ...FEEDBACK_TYPES.map((t) => ({ value: t, label: t })),
+                ]}
+              />
+              <SelectMenu
+                ariaLabel="Filter by priority"
+                className="w-full sm:w-40"
+                value={priority}
+                onChange={(v) => { setPage(1); setPriority(v); }}
+                options={[
+                  { value: "", label: "All priorities" },
+                  ...Object.entries(PRIORITY_META).map(([k, val]) => ({ value: k, label: val.label })),
+                ]}
+              />
+              <SelectMenu
+                ariaLabel="Filter by rating"
+                className="w-full sm:w-40"
+                value={rating}
+                onChange={(v) => { setPage(1); setRating(v); }}
+                options={[
+                  { value: "", label: "Any rating" },
+                  ...[5, 4, 3, 2, 1].map((n) => ({ value: String(n), label: `${n}★` })),
+                ]}
+              />
+              <SelectMenu
+                ariaLabel="Filter by assignee"
+                className="w-full sm:w-40"
+                value={assigned}
+                onChange={(v) => { setPage(1); setAssigned(v); }}
+                options={[
+                  { value: "", label: "Any assignee" },
+                  ...admins.map((a) => ({ value: a.id, label: a.name || a.email })),
+                ]}
+              />
+              <SelectMenu
+                ariaLabel="Sort by"
+                className="w-full sm:w-40"
+                value={sort}
+                onChange={(v) => { setPage(1); setSort(v); }}
+                options={[
+                  { value: "created_at", label: "Newest created" },
+                  { value: "updated_at", label: "Recently updated" },
+                  { value: "priority", label: "Priority" },
+                  { value: "rating", label: "Rating" },
+                ]}
+              />
             </div>
           </div>
 
@@ -338,9 +375,9 @@ function FeedbackDetailModal({
   const assignee = feedback ? admins.find((a) => a.id === feedback.assigned_admin_id) : undefined;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center p-0 sm:items-center sm:p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" onClick={onClose} aria-hidden="true" />
-      <div role="dialog" aria-modal="true" className="relative w-full max-w-2xl max-h-[92vh] sm:max-h-[86vh] bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+      <div role="dialog" aria-modal="true" className="relative w-full max-w-2xl max-h-[92vh] sm:max-h-[86vh] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden">
         {/* Header */}
         <div className="flex items-start justify-between gap-3 px-5 py-4 border-b border-line bg-brand-900 text-white shrink-0">
           <div className="min-w-0">
@@ -458,6 +495,7 @@ function FeedbackDetailModal({
         busy={deleting}
         onCancel={() => setConfirmDelete(false)}
         onConfirm={() => void doDelete()}
+        centered
       />
     </div>
   );
@@ -478,7 +516,7 @@ function PromptSettingsModal({ onClose }: { onClose: () => void }) {
   const load = useLoad(() => adminGetFeedbackSettings(), []);
 
   return (
-    <ModalShell title="Automatic Feedback Prompt" onClose={onClose}>
+    <ModalShell title="Automatic Feedback Prompt" onClose={onClose} centered>
       {load.loading ? (
         <div className="space-y-3 py-2"><Sk className="h-10" /><Sk className="h-10" /><Sk className="h-10" /></div>
       ) : load.error ? (

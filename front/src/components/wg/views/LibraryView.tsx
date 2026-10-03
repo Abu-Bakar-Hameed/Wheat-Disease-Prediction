@@ -707,14 +707,12 @@ function DiseaseDetailModal({
         inset-0
         z-50
         flex
-        items-end
+        items-center
         justify-center
         overflow-y-auto
         bg-black/70
-        p-0
+        p-4
         backdrop-blur-sm
-        sm:items-center
-        sm:p-4
       "
       onClick={(e) => {
         if (e.target === e.currentTarget) {
@@ -734,7 +732,7 @@ function DiseaseDetailModal({
           max-w-md
           flex-col
           overflow-hidden
-          rounded-t-3xl
+          rounded-3xl
           border
           border-brand-700/40
           bg-surface

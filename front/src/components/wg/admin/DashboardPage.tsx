@@ -259,6 +259,7 @@ export function DashboardPage() {
         onConfirm={handleDeleteConfirmed}
         busy={deleting}
         onCancel={() => setDeleteTarget(null)}
+        centered
       />
     </div>
   );

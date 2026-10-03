@@ -20,6 +20,7 @@ import {
   useLoad,
   Sk,
 } from "./ui";
+import { SelectMenu } from "@/components/wg/ui";
 
 /* ------------------------------------------------------------------ */
 /* Constants & helpers                                                 */
@@ -182,7 +183,7 @@ function DeleteDialog({
   onCancel: () => void;
 }) {
   return (
-    <ModalShell title="Delete disease" onClose={() => { if (!deleting) onCancel(); }}>
+    <ModalShell title="Delete disease" onClose={() => { if (!deleting) onCancel(); }} centered>
       <div className="space-y-5">
         <div className="flex items-start gap-3">
           <div className="w-10 h-10 rounded-full bg-danger-soft flex items-center justify-center shrink-0">
@@ -542,7 +543,7 @@ export function DiseasesPage() {
       )}
 
       {detail && (
-        <ModalShell title={detail.display_name} onClose={() => setDetail(null)}>
+        <ModalShell title={detail.display_name} onClose={() => setDetail(null)} centered>
           <div className="space-y-4">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={getDiseaseImg(detail)} alt={detail.display_name} className="w-full h-64 object-cover rounded-xl border border-line" />
@@ -937,7 +938,7 @@ function DiseaseModal({
   const hasFieldErrors = Object.keys(fieldErrors).length > 0;
 
   return (
-    <ModalShell title={disease ? "Edit disease" : "Add disease"} onClose={onClose}>
+    <ModalShell title={disease ? "Edit disease" : "Add disease"} onClose={onClose} centered>
       <div className="space-y-4">
         {err && (
           <div
@@ -976,24 +977,27 @@ function DiseaseModal({
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Field label="Category *">
-            <select
-              id="disease-category"
-              className={inputCls}
-              style={fieldStyle("category")}
+            <SelectMenu
+              ariaLabel="Category"
+              className="w-full"
+              buttonClassName={fieldErrors.category ? "border-[#dc2626]" : undefined}
               value={category}
-              onChange={(e) => { setCategory(e.target.value); clearFieldError("category"); }}
-            >
-              {CATEGORIES.filter((c) => c !== "All").map((c) => (
-                <option key={c} value={c}>{c}</option>
-              ))}
-            </select>
+              onChange={(v) => { setCategory(v); clearFieldError("category"); }}
+              options={CATEGORIES.filter((c) => c !== "All").map((c) => ({ value: c, label: c }))}
+            />
             <FieldError k="category" />
           </Field>
           <Field label="Status *">
-            <select className={inputCls} value={status} onChange={(e) => setStatus(e.target.value as "active" | "inactive")}>
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
-            </select>
+            <SelectMenu
+              ariaLabel="Status"
+              className="w-full"
+              value={status}
+              onChange={(v) => setStatus(v as "active" | "inactive")}
+              options={[
+                { value: "active", label: "Active" },
+                { value: "inactive", label: "Inactive" },
+              ]}
+            />
           </Field>
         </div>
 

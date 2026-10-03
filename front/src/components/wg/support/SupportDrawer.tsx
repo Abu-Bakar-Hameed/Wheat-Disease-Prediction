@@ -19,6 +19,7 @@ import { createPortal } from "react-dom";
 import type { KeyboardEvent as ReactKeyboardEvent } from "react";
 import type { SupportMessage, SupportQuery, SupportStatus } from "@/types";
 import { SUPPORT_CATEGORIES } from "@/types";
+import { SelectMenu } from "@/components/wg/ui";
 import {
   clearQueryMessages,
   createSupportQuery,
@@ -651,14 +652,16 @@ export function SupportDrawer({ onClose }: { onClose: () => void }) {
 
               <div>
                 <label className="block text-[12px] font-semibold text-ink mb-1.5">Category</label>
-                <select
+                <SelectMenu
+                  ariaLabel="Category"
+                  className="w-full"
                   value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                  className="w-full px-3 py-2.5 rounded-lg border border-line text-[14px] outline-none focus:border-brand-700 bg-surface"
-                >
-                  <option value="">Select a category (optional)</option>
-                  {SUPPORT_CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
-                </select>
+                  onChange={(v) => setCategory(v)}
+                  options={[
+                    { value: "", label: "Select a category (optional)" },
+                    ...SUPPORT_CATEGORIES.map((c) => ({ value: c, label: c })),
+                  ]}
+                />
               </div>
 
               <div>

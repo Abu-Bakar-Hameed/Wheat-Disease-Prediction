@@ -19,6 +19,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { SelectMenu } from "@/components/wg/ui";
 import {
   Area,
   AreaChart,
@@ -350,7 +351,6 @@ export function UserRetentionPage() {
   const router = useRouter();
 
   const [days, setDays] = useState(30);
-  const [periodOpen, setPeriodOpen] = useState(false);
 
   const [summary,  setSummary]  = useState<RetentionSummary | null>(null);
   const [trend,    setTrend]    = useState<RetentionTrend | null>(null);
@@ -523,16 +523,6 @@ export function UserRetentionPage() {
     return () => clearTimeout(t);
   }, [indSearchInput]);
 
-  // Close period dropdown on outside click
-  useEffect(() => {
-    if (!periodOpen) return;
-    const h = () => setPeriodOpen(false);
-    document.addEventListener("click", h);
-    return () => document.removeEventListener("click", h);
-  }, [periodOpen]);
-
-  const currentPeriod = PERIOD_OPTIONS.find(o => o.days === days) ?? PERIOD_OPTIONS[1];
-
   // Trend chart data
   const trendRates = trend?.rates ?? [];
   const hasTrendData = trendRates.some(r => r.cohort_size > 0);
@@ -606,35 +596,14 @@ export function UserRetentionPage() {
         </div>
 
         {/* Period selector */}
-        <div className="relative" onClick={e => e.stopPropagation()}>
-          <button
-            onClick={() => setPeriodOpen(v => !v)}
-            className="flex h-10 items-center gap-2 rounded-lg border border-line bg-white px-4 text-[13px] font-semibold text-ink shadow-sm transition-colors hover:bg-surface-muted"
-          >
-            <span className="material-symbols-outlined text-muted" style={{ fontSize: 17 }}>
-              date_range
-            </span>
-            {currentPeriod.label}
-            <span className="material-symbols-outlined text-muted" style={{ fontSize: 17 }}>
-              expand_more
-            </span>
-          </button>
-          {periodOpen && (
-            <div className="absolute right-0 top-11 z-30 w-44 overflow-hidden rounded-lg border border-line bg-white shadow-lg">
-              {PERIOD_OPTIONS.map(opt => (
-                <button
-                  key={opt.days}
-                  onClick={() => { setDays(opt.days); setPeriodOpen(false); }}
-                  className={`w-full px-4 py-2.5 text-left text-[13px] transition-colors hover:bg-brand-50 ${
-                    opt.days === days ? "bg-brand-50 font-semibold text-brand-700" : "text-ink"
-                  }`}
-                >
-                  {opt.label}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
+        <SelectMenu
+          ariaLabel="Reporting period"
+          icon="date_range"
+          className="w-full sm:w-48"
+          value={String(days)}
+          onChange={(v) => setDays(Number(v))}
+          options={PERIOD_OPTIONS.map((o) => ({ value: String(o.days), label: o.label }))}
+        />
       </div>
 
       {/* ── Row 1: audience summary ──────────────────────────────────────── */}
@@ -966,8 +935,7 @@ export function UserRetentionPage() {
           )}
         </DashCard>
 
-        {/* Notification activity (spec §42) — display only; configuration
-            stays in the existing settings system (/admin/settings). */}
+        {/* Notification activity (spec §42) — display only. */}
         <DashCard title="🔔 Notification Activity">
           <div className="flex flex-1 flex-col gap-3">
             {loadingActivity ? (
@@ -982,21 +950,6 @@ export function UserRetentionPage() {
                     {formatNumber(activity?.notifications ?? 0)}
                   </p>
                 </div>
-
-                <div className="flex items-start gap-2 rounded-lg border border-info-soft bg-info-soft px-3 py-2.5">
-                  <span className="material-symbols-outlined text-[#0284c7]" style={{ fontSize: 15 }}>info</span>
-                  <p className="text-[11px] leading-snug text-[#0369a1]">
-                    Notification preferences are configured in the existing settings system.
-                  </p>
-                </div>
-
-                <button
-                  onClick={() => router.push("/admin/settings")}
-                  className="mt-auto flex items-center justify-center gap-1 rounded-lg border border-line px-3 py-2 text-[12px] font-semibold text-brand-700 transition-colors hover:bg-brand-50"
-                >
-                  Manage in System Settings
-                  <span className="material-symbols-outlined" style={{ fontSize: 14 }}>arrow_forward</span>
-                </button>
               </>
             )}
           </div>
@@ -1022,37 +975,46 @@ export function UserRetentionPage() {
                 className="h-9 w-[210px] rounded-lg border border-line bg-white pl-8 pr-3 text-[13px] text-ink outline-none transition-colors focus:border-brand-600"
               />
             </div>
-            <select
+            <SelectMenu
+              ariaLabel="Filter by status"
+              className="w-full sm:w-40"
+              buttonClassName="h-9 text-[13px]"
               value={indStatus}
-              onChange={(e) => { setIndStatus(e.target.value); setIndPage(1); }}
-              className="h-9 rounded-lg border border-line bg-white px-2.5 text-[13px] text-ink outline-none focus:border-brand-600"
-            >
-              <option value="all">All</option>
-              <option value="new">New</option>
-              <option value="active">Active</option>
-              <option value="returning">Returning</option>
-              <option value="inactive">Inactive</option>
-            </select>
-            <select
+              onChange={(v) => { setIndStatus(v); setIndPage(1); }}
+              options={[
+                { value: "all", label: "All" },
+                { value: "new", label: "New" },
+                { value: "active", label: "Active" },
+                { value: "returning", label: "Returning" },
+                { value: "inactive", label: "Inactive" },
+              ]}
+            />
+            <SelectMenu
+              ariaLabel="Filter by engagement"
+              className="w-full sm:w-44"
+              buttonClassName="h-9 text-[13px]"
               value={indEngagement}
-              onChange={(e) => { setIndEngagement(e.target.value); setIndPage(1); }}
-              className="h-9 rounded-lg border border-line bg-white px-2.5 text-[13px] text-ink outline-none focus:border-brand-600"
-            >
-              <option value="all">All Engagement</option>
-              <option value="has_predictions">Has Predictions</option>
-              <option value="no_predictions">No Predictions</option>
-            </select>
-            <select
+              onChange={(v) => { setIndEngagement(v); setIndPage(1); }}
+              options={[
+                { value: "all", label: "All Engagement" },
+                { value: "has_predictions", label: "Has Predictions" },
+                { value: "no_predictions", label: "No Predictions" },
+              ]}
+            />
+            <SelectMenu
+              ariaLabel="Sort users"
+              className="w-full sm:w-44"
+              buttonClassName="h-9 text-[13px]"
               value={indSort}
-              onChange={(e) => { setIndSort(e.target.value as RetentionIndividualSort); setIndPage(1); }}
-              className="h-9 rounded-lg border border-line bg-white px-2.5 text-[13px] text-ink outline-none focus:border-brand-600"
-            >
-              <option value="newest">Newest</option>
-              <option value="oldest">Oldest</option>
-              <option value="last_active">Last Active</option>
-              <option value="most_predictions">Most Predictions</option>
-              <option value="most_logins">Most Logins</option>
-            </select>
+              onChange={(v) => { setIndSort(v as RetentionIndividualSort); setIndPage(1); }}
+              options={[
+                { value: "newest", label: "Newest" },
+                { value: "oldest", label: "Oldest" },
+                { value: "last_active", label: "Last Active" },
+                { value: "most_predictions", label: "Most Predictions" },
+                { value: "most_logins", label: "Most Logins" },
+              ]}
+            />
           </div>
         </div>
 

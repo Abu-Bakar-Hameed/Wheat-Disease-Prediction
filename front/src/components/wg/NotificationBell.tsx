@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useAuth } from "@/lib/auth";
 import {
   fetchNotifications,
@@ -43,6 +44,51 @@ export function NotificationBell() {
   const [error, setError] = useState("");
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const btnRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const [coords, setCoords] = useState<
+    { top: number; right: number; width: number; maxHeight: number } | null
+  >(null);
+
+  // The bell is not at the far-right of the bar (the avatar sits beside it), so a
+  // right-anchored panel can overflow the LEFT viewport edge on narrow screens and
+  // clip its title. Measure against the bell and clamp so the panel always fits.
+  const measure = useCallback(() => {
+    const el = btnRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const margin = 8;
+    const width = Math.min(384, vw - margin * 2);
+    let right = vw - rect.right;
+    if (vw - right - width < margin) right = vw - margin - width;
+    const top = rect.bottom + 8;
+    const maxHeight = Math.max(240, Math.min(480, vh - top - margin));
+    setCoords({ top, right, width, maxHeight });
+  }, []);
+
+  useLayoutEffect(() => {
+    if (!open) return;
+    measure();
+    const onReflow = () => measure();
+    window.addEventListener("resize", onReflow);
+    window.addEventListener("scroll", onReflow, true);
+    return () => {
+      window.removeEventListener("resize", onReflow);
+      window.removeEventListener("scroll", onReflow, true);
+    };
+  }, [open, measure]);
+
+  // Close on Escape.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open]);
 
   const refreshCount = () => {
     if (!user) return;
@@ -148,6 +194,7 @@ export function NotificationBell() {
   return (
     <div className="relative">
       <button
+        ref={btnRef}
         onClick={handleOpen}
         className="relative w-10 h-10 rounded-xl text-ink hover:bg-[#F4F6F5] hover:text-brand-900 flex items-center justify-center transition-all duration-150"
         aria-label={`Notifications${unreadCount > 0 ? ` (${unreadCount} unread)` : ""}`}
@@ -160,10 +207,15 @@ export function NotificationBell() {
         )}
       </button>
 
-      {open && (
+      {open && coords && typeof document !== "undefined" &&
+        createPortal(
         <>
-          <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
-          <div className="absolute right-0 top-12 w-80 sm:w-96 bg-surface border border-line rounded-2xl shadow-xl z-50 flex flex-col max-h-[480px] overflow-hidden animate-in fade-in slide-in-from-top-2 duration-150">
+          <div className="fixed inset-0 z-[70]" onClick={() => setOpen(false)} />
+          <div
+            ref={panelRef}
+            style={{ position: "fixed", top: coords.top, right: coords.right, width: coords.width, maxHeight: coords.maxHeight }}
+            className="z-[80] flex flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-xl animate-in fade-in slide-in-from-top-2 duration-150"
+          >
             <div className="flex items-center justify-between px-4 py-3.5 border-b border-line bg-canvas shrink-0">
               <div className="flex items-center gap-2">
                 <span className="material-symbols-outlined text-brand-900 dark:text-brand-300" style={{ fontSize: 20 }}>notifications</span>
@@ -218,14 +270,14 @@ export function NotificationBell() {
                           <div className="text-[12px] text-muted mt-0.5 leading-normal line-clamp-2">{item.body}</div>
                         </div>
                       </button>
-                      <span className="text-[10px] text-muted shrink-0 mt-0.5 font-medium group-hover:opacity-0 transition-opacity pointer-events-none">
+                      <span className="text-[10px] text-muted shrink-0 mt-0.5 font-medium group-hover:opacity-0 transition-opacity pointer-events-none max-sm:hidden">
                         {relativeTime(item.created_at)}
                       </span>
                       <button
                         onClick={() => void handleDelete(item)}
                         disabled={deletingId === item.id}
                         aria-label="Delete notification"
-                        className="absolute right-2.5 top-2.5 w-7 h-7 rounded-lg items-center justify-center text-muted opacity-0 group-hover:opacity-100 focus:opacity-100 hover:bg-danger-soft hover:text-danger transition-all disabled:opacity-60 hidden group-hover:flex"
+                        className="absolute right-2.5 top-2.5 flex w-7 h-7 rounded-lg items-center justify-center text-muted opacity-100 hover:bg-danger-soft hover:text-danger transition-all disabled:opacity-60 sm:opacity-0 sm:group-hover:opacity-100 sm:focus:opacity-100"
                       >
                         <span className="material-symbols-outlined" style={{ fontSize: 16 }}>
                           {deletingId === item.id ? "progress_activity" : "delete"}
@@ -258,7 +310,8 @@ export function NotificationBell() {
               </div>
             )}
           </div>
-        </>
+        </>,
+        document.body
       )}
     </div>
   );

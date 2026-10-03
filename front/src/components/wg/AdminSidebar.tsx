@@ -6,8 +6,6 @@ import { usePathname } from "next/navigation";
 import { useApp } from "@/lib/appState";
 import { useAuth } from "@/lib/auth";
 import { ADMIN_NAV } from "@/lib/adminNav";
-import { adminNewQueryCount } from "@/lib/supportApi";
-import { adminNewFeedbackCount } from "@/lib/feedbackApi";
 import { Icon } from "@/components/wg/ui";
 import { cn } from "@/lib/utils";
 
@@ -34,44 +32,6 @@ function SidebarBody({
   const { setRole } = useApp();
   const { displayName, initials, signOut } = useAuth();
   const pathname = usePathname();
-
-  // Dynamic "new queries" / "new feedback" badges on the nav items.
-  const [newQueries, setNewQueries] = useState(0);
-  const [newFeedback, setNewFeedback] = useState(0);
-  useEffect(() => {
-    let alive = true;
-    const tick = () => {
-      // Skip badge polling while the tab is hidden to save network/backend load.
-      if (typeof document !== "undefined" && document.hidden) return;
-      adminNewQueryCount().then((n) => { if (alive) setNewQueries(n); });
-      adminNewFeedbackCount().then((n) => { if (alive) setNewFeedback(n); });
-    };
-    // Defer the first fetch to browser idle time so these two count calls never
-    // compete with the page's own data load on first paint (keeps the panel
-    // snappy). Subsequent refreshes run on a 60s interval.
-    const w = window as typeof window & {
-      requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
-      cancelIdleCallback?: (id: number) => void;
-    };
-    let idleId: number | undefined;
-    let startId: ReturnType<typeof setTimeout> | undefined;
-    if (typeof w.requestIdleCallback === "function") {
-      idleId = w.requestIdleCallback(() => { tick(); }, { timeout: 2000 });
-    } else {
-      startId = setTimeout(tick, 1200);
-    }
-    const id = setInterval(tick, 60_000);
-    return () => {
-      alive = false;
-      clearInterval(id);
-      if (idleId !== undefined && typeof w.cancelIdleCallback === "function") {
-        w.cancelIdleCallback(idleId);
-      }
-      if (startId !== undefined) clearTimeout(startId);
-    };
-  }, []);
-  const badgeFor = (href: string) =>
-    href === "/admin/queries" ? newQueries : href === "/admin/feedback" ? newFeedback : 0;
 
   const handleLogout = async () => {
     try {
@@ -168,7 +128,6 @@ function SidebarBody({
           const active =
             pathname === href ||
             (href !== "/admin" && pathname.startsWith(`${href}/`));
-          const badge = badgeFor(href);
           return (
             <Link
               key={href}
@@ -194,24 +153,13 @@ function SidebarBody({
                   )}
                 />
               )}
-              <span className="relative shrink-0">
-                <Icon
-                  name={icon}
-                  size={18}
-                  className={cn(active ? "text-white" : "text-brand-900/60 group-hover:text-brand-950")}
-                />
-                {/* Collapsed mode surfaces the count as a small dot on the icon. */}
-                {collapsed && badge > 0 && (
-                  <span className="absolute -right-1.5 -top-1.5 h-2 w-2 rounded-full bg-danger ring-2 ring-white" />
-                )}
-              </span>
+              <Icon
+                name={icon}
+                size={18}
+                className={cn("shrink-0", active ? "text-white" : "text-brand-900/60 group-hover:text-brand-950")}
+              />
               {!collapsed && <span className="truncate">{label}</span>}
-              {!collapsed && badge > 0 && (
-                <span className="ml-auto flex h-[18px] min-w-[18px] shrink-0 items-center justify-center rounded-full bg-danger px-1 text-[10px] font-bold text-white">
-                  {badge > 9 ? "9+" : badge}
-                </span>
-              )}
-              {!collapsed && active && badge === 0 && (
+              {!collapsed && active && (
                 <span className="ml-auto h-1.5 w-1.5 shrink-0 rounded-full bg-white/70" />
               )}
             </Link>

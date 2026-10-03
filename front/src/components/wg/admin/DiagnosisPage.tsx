@@ -207,11 +207,12 @@ export function DiagnosisPage() {
         onConfirm={handleDeleteConfirmed}
         busy={deleting}
         onCancel={() => setDeleteTarget(null)}
+        centered
       />
 
       {open && <NewDiagnosisModal onClose={() => setOpen(false)} onSaved={() => { setOpen(false); reload(); }} />}
       {detail && (
-        <ModalShell title="Diagnosis Detail" onClose={() => setDetail(null)}>
+        <ModalShell title="Diagnosis Detail" onClose={() => setDetail(null)} centered>
           <div className="space-y-4">
             <LeafThumb src={detail.image_url} alt={detail.predicted_class} className="w-full h-64 mb-2 rounded-xl" />
             <div className="flex items-center justify-between gap-3">
@@ -285,7 +286,7 @@ function NewDiagnosisModal({ onClose, onSaved }: { onClose: () => void; onSaved:
   };
 
   return (
-    <ModalShell title="New Diagnosis" onClose={onClose}>
+    <ModalShell title="New Diagnosis" onClose={onClose} centered>
       <p className="text-[13px] text-muted mb-4">Upload a leaf image to run the AI disease detection model.</p>
       <Field label="Leaf Image">
         <div className="border-2 border-dashed border-line rounded-xl p-6 text-center hover:border-brand-700 transition-colors cursor-pointer"
