@@ -178,6 +178,10 @@ export interface HistoryItem {
   image_url: string | null;
   gradcam_available: boolean;
   created_at: string;
+  // Some history payloads carry a dedicated prediction_id (the value the
+  // /dashboard/history/[id] route queries by). Optional: callers fall back to
+  // `id` when it is absent.
+  prediction_id?: string | null;
   ai_report?: AiDiagnosisReport | null;
 }
 
