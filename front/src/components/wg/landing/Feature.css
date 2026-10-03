@@ -1,0 +1,439 @@
+* {
+  box-sizing: border-box;
+}
+
+.features-section {
+  width: 100%;
+  padding: 25px 0 35px;
+  background: #ffffff;
+  font-family: "Inter", Arial, sans-serif;
+}
+
+.features-container {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+@media (min-width: 1024px) {
+  .features-container {
+    padding: 0 40px;
+  }
+}
+
+/* Badge */
+
+.feature-badge {
+  width: fit-content;
+  margin: 0 auto 10px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 7px 15px;
+
+  background: #eef8ef;
+  color: #19833d;
+
+  border-radius: 30px;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* Heading */
+
+.features-title {
+  text-align: center;
+  margin: 0 0 12px;
+
+  font-size: 34px;
+  line-height: 1.15;
+  font-weight: 800;
+
+  color: #101820;
+}
+
+.features-title span {
+  color: #087b35;
+}
+
+.features-subtitle {
+  text-align: center;
+
+  margin: 0 auto 28px;
+
+  font-size: 14px;
+  line-height: 1.6;
+
+  color: #64748b;
+}
+
+/* Grid */
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+/* Card */
+
+.feature-card {
+  min-height: 204px;
+
+  padding: 20px;
+
+  background: #ffffff;
+
+  border: 1px solid #edf1ed;
+  border-radius: 15px;
+
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.055);
+
+  transition: all 0.25s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow: 0 12px 28px rgba(22, 101, 52, 0.1);
+}
+
+/* Header */
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  margin-bottom: 12px;
+}
+
+.icon-box {
+  width: 43px;
+  height: 43px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #eef8ef;
+  color: #087b35;
+
+  border-radius: 13px;
+}
+
+.card-header h3 {
+  margin: 0;
+
+  font-size: 14px;
+  line-height: 1.5;
+
+  font-weight: 700;
+  color: #18201c;
+}
+
+/* Content */
+
+.card-content {
+  display: flex;
+  align-items: center;
+
+  gap: 16px;
+}
+
+.card-content p {
+  flex: 1;
+
+  margin: 0;
+
+  font-size: 11.5px;
+  line-height: 1.65;
+
+  color: #64748b;
+}
+
+/* Images */
+
+.card-image {
+  width: 105px;
+  height: 104px;
+
+  flex-shrink: 0;
+
+  position: relative;
+
+  overflow: hidden;
+
+  border-radius: 9px;
+
+  background: #eaf4e9;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+}
+
+/* Library image sits on a light background — show it whole */
+.card-image--contain {
+  background: #ffffff;
+}
+
+.card-image--contain img {
+  object-fit: contain;
+  padding: 4px;
+}
+
+/* Speed */
+
+.speed-visual {
+  width: 105px;
+  height: 105px;
+
+  flex-shrink: 0;
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.speed-circle {
+  width: 82px;
+  height: 82px;
+
+  border-radius: 50%;
+
+  border: 5px solid #e0f0e1;
+
+  border-top-color: #78b979;
+  border-right-color: #78b979;
+
+  transform: rotate(20deg);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.speed-content {
+  transform: rotate(-20deg);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.speed-content strong {
+  font-size: 25px;
+  color: #126d2f;
+}
+
+.speed-content small {
+  font-size: 8px;
+  color: #55705b;
+}
+
+.bolt {
+  position: absolute;
+
+  right: 0;
+  top: 8px;
+
+  width: 34px;
+  height: 34px;
+
+  border-radius: 50%;
+
+  background: #7cbd72;
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Confidence */
+
+.confidence-visual {
+  width: 105px;
+  height: 105px;
+
+  flex-shrink: 0;
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.confidence-ring {
+  width: 82px;
+  height: 82px;
+
+  border-radius: 50%;
+
+  background:
+    conic-gradient(
+      #087b35 0deg 338deg,
+      #e3f0e4 338deg 360deg
+    );
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.confidence-ring::before {
+  content: "";
+
+  position: absolute;
+
+  width: 68px;
+  height: 68px;
+
+  border-radius: 50%;
+
+  background: white;
+}
+
+.confidence-ring span {
+  position: relative;
+  z-index: 2;
+
+  font-size: 20px;
+  font-weight: 700;
+
+  color: #087b35;
+}
+
+.confidence-visual small {
+  position: absolute;
+
+  bottom: -2px;
+
+  font-size: 9px;
+  font-weight: 600;
+
+  color: #19833d;
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 650px) {
+  .features-container {
+    padding: 0 16px;
+  }
+
+  .features-title {
+    font-size: 27px;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 400px) {
+  .card-content {
+    gap: 10px;
+  }
+
+  .card-image,
+  .speed-visual,
+  .confidence-visual {
+    width: 90px;
+  }
+
+  .card-image {
+    height: 95px;
+  }
+}
+
+/* ── Dark theme (toggled by the navbar button via .dark on <html>) ── */
+.dark .features-section {
+  background: #071410;
+}
+
+.dark .feature-badge {
+  background: rgba(34, 197, 94, 0.14);
+  color: #86efac;
+}
+
+.dark .features-title {
+  color: #f1f7f2;
+}
+
+.dark .features-title span {
+  color: #4ade80;
+}
+
+.dark .features-subtitle {
+  color: #9db0a4;
+}
+
+.dark .feature-card {
+  background: #0d2018;
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.dark .feature-card:hover {
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+}
+
+.dark .icon-box {
+  background: rgba(34, 197, 94, 0.14);
+  color: #4ade80;
+}
+
+.dark .card-header h3 {
+  color: #e8f1ea;
+}
+
+.dark .card-content p {
+  color: #9db0a4;
+}
+
+.dark .speed-circle {
+  border-color: rgba(255, 255, 255, 0.12);
+  border-top-color: #4ade80;
+  border-right-color: #4ade80;
+}
+
+.dark .speed-content strong {
+  color: #4ade80;
+}
+
+.dark .speed-content small {
+  color: #9db0a4;
+}
+
+.dark .confidence-ring::before {
+  background: #0d2018;
+}
+
+.dark .confidence-ring span {
+  color: #4ade80;
+}
+
+.dark .confidence-visual small {
+  color: #86efac;
+}

@@ -1,0 +1,862 @@
+/* ========================================
+   RESET
+======================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background: #f7faf7;
+  color: #101510;
+}
+
+
+/* ========================================
+   MAIN HERO
+======================================== */
+
+.hero {
+  width: 100%;
+  min-height: 100vh;
+
+  position: relative;
+  overflow: hidden;
+
+  display: flex;
+
+  background:
+    radial-gradient(
+      circle at 45% 50%,
+      rgba(218, 240, 222, 0.35),
+      transparent 35%
+    ),
+    #ffffff;
+}
+
+
+/* ========================================
+   LEFT CONTENT
+======================================== */
+
+.content {
+  width: 58%;
+  min-height: 100vh;
+
+  padding: 48px 35px 38px 58px;
+
+  position: relative;
+  z-index: 5;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+/* ========================================
+   BADGE
+======================================== */
+
+.badge {
+  width: fit-content;
+
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 7px 13px;
+
+  border-radius: 30px;
+
+  background: #f1f7f2;
+
+  color: #39864c;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 0.2px;
+
+  margin-bottom: 17px;
+}
+
+.badge svg {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+
+/* ========================================
+   HEADING
+======================================== */
+
+.content h1 {
+  max-width: 590px;
+
+  font-size: clamp(42px, 4.5vw, 67px);
+
+  line-height: 0.99;
+
+  letter-spacing: -2.7px;
+
+  font-weight: 800;
+
+  color: #101410;
+
+  margin-bottom: 17px;
+}
+
+.content h1 span {
+  display: block;
+  color: #25803c;
+}
+
+
+/* ========================================
+   INTRO
+======================================== */
+
+.intro {
+  max-width: 500px;
+
+  font-size: 13px;
+
+  line-height: 1.65;
+
+  color: #626b64;
+
+  font-weight: 400;
+
+  margin-bottom: 13px;
+}
+
+
+/* ========================================
+   GREEN LINE
+======================================== */
+
+.green-line {
+  width: 48px;
+  height: 3px;
+
+  background: #258342;
+
+  border-radius: 10px;
+
+  margin-bottom: 19px;
+}
+
+
+/* ========================================
+   FEATURE GRID
+======================================== */
+
+.feature-grid {
+  width: 100%;
+  max-width: 680px;
+
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 13px;
+
+  margin-bottom: 14px;
+}
+
+
+/* ========================================
+   FEATURE CARD
+======================================== */
+
+.feature-card {
+  min-height: 160px;
+
+  padding: 17px 17px 15px;
+
+  border: 1px solid #e7ece7;
+
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.82);
+
+  box-shadow:
+    0 3px 12px rgba(30, 70, 40, 0.025);
+
+  text-align: center;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+
+  border-color: #c9dfcd;
+
+  box-shadow:
+    0 10px 25px rgba(30, 80, 40, 0.08);
+}
+
+
+/* ========================================
+   FEATURE ICON
+======================================== */
+
+.feature-icon {
+  width: 51px;
+  height: 51px;
+
+  margin: 0 auto 10px;
+
+  border-radius: 50%;
+
+  background: #f2f7f3;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #318b48;
+
+  font-size: 22px;
+}
+
+.feature-icon svg {
+  width: 23px;
+  height: 23px;
+}
+
+
+/* ========================================
+   FEATURE TITLE
+======================================== */
+
+.feature-card h3 {
+  font-size: 12px;
+
+  font-weight: 700;
+
+  color: #202620;
+
+  margin-bottom: 8px;
+}
+
+
+/* ========================================
+   CARD LINE
+======================================== */
+
+.card-line {
+  width: 20px;
+  height: 2px;
+
+  background: #4c9b5b;
+
+  margin: 0 auto 9px;
+
+  border-radius: 5px;
+}
+
+
+/* ========================================
+   CARD TEXT
+======================================== */
+
+.feature-card p {
+  font-size: 8.5px;
+
+  line-height: 1.55;
+
+  color: #737a74;
+}
+
+
+/* ========================================
+   BOTTOM SECTION
+======================================== */
+
+.bottom-section {
+  width: 100%;
+  max-width: 680px;
+
+  min-height: 76px;
+
+  border-radius: 11px;
+
+  background: #f4f8f4;
+
+  display: grid;
+
+  grid-template-columns:
+    2.8fr
+    1fr
+    1fr
+    1.15fr;
+
+  align-items: center;
+
+  padding: 11px 13px;
+
+  gap: 5px;
+}
+
+
+/* ========================================
+   WHY SECTION
+======================================== */
+
+.why-section {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding-right: 10px;
+}
+
+
+/* ========================================
+   WHY ICON
+======================================== */
+
+.why-icon {
+  flex-shrink: 0;
+
+  width: 43px;
+  height: 43px;
+
+  border-radius: 50%;
+
+  background: #237a3d;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+
+  font-size: 19px;
+}
+
+.why-icon svg {
+  width: 21px;
+  height: 21px;
+}
+
+
+/* ========================================
+   WHY CONTENT
+======================================== */
+
+.why-content h3 {
+  font-size: 10px;
+
+  font-weight: 700;
+
+  color: #232923;
+
+  margin-bottom: 4px;
+}
+
+.why-content p {
+  font-size: 7.5px;
+
+  line-height: 1.45;
+
+  color: #717971;
+
+  max-width: 220px;
+}
+
+
+/* ========================================
+   SMALL FEATURES
+======================================== */
+
+.small-feature {
+  min-height: 54px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  border-left: 1px solid #dfe8df;
+}
+
+.small-icon {
+  width: 27px;
+  height: 27px;
+
+  border-radius: 50%;
+
+  border: 1px solid #cfe2d2;
+
+  color: #338849;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 3px;
+
+  font-size: 11px;
+}
+
+.small-icon svg {
+  width: 13px;
+  height: 13px;
+}
+
+.small-feature strong {
+  font-size: 7.5px;
+
+  line-height: 1.2;
+
+  color: #303830;
+}
+
+.small-feature span {
+  font-size: 6.5px;
+
+  color: #737a74;
+
+  margin-top: 1px;
+}
+
+
+/* ========================================
+   RIGHT IMAGE
+======================================== */
+
+.image-area {
+  position: absolute;
+
+  top: 0;
+  right: 0;
+
+  width: 46%;
+  height: 100%;
+
+  overflow: hidden;
+
+  z-index: 1;
+}
+
+.wheat-image {
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  object-position: center;
+
+  right: 0;
+  top: 0;
+
+  clip-path: ellipse(
+    100% 90% at 100% 50%
+  );
+
+  transform: scale(1.05);
+
+  filter:
+    saturate(1.03)
+    contrast(1.01);
+}
+
+
+/* ========================================
+   IMAGE OVERLAY
+======================================== */
+
+.image-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.35) 0%,
+      rgba(255, 255, 255, 0.04) 22%,
+      rgba(0, 0, 0, 0.02) 100%
+    );
+
+  z-index: 2;
+
+  clip-path: ellipse(
+    100% 90% at 100% 50%
+  );
+}
+
+
+/* ========================================
+   DECORATIVE DOTS
+======================================== */
+
+.dots {
+  position: absolute;
+
+  width: 45px;
+  height: 45px;
+
+  opacity: 0.35;
+
+  background-image:
+    radial-gradient(
+      #77bd85 1.3px,
+      transparent 1.3px
+    );
+
+  background-size: 8px 8px;
+
+  z-index: 3;
+}
+
+.dots-top {
+  top: 45px;
+  left: 46%;
+}
+
+
+/* ========================================
+   DECORATIVE LEAVES
+======================================== */
+
+.decorative-wheat {
+  position: absolute;
+
+  left: 43%;
+
+  top: 130px;
+
+  width: 100px;
+  height: 180px;
+
+  opacity: 0.09;
+
+  transform: rotate(-17deg);
+
+  z-index: 2;
+
+  pointer-events: none;
+}
+
+.decorative-wheat .leaf {
+  position: absolute;
+
+  color: #4c9b5b;
+
+  width: 48px;
+  height: 48px;
+}
+
+.leaf-1 {
+  top: 0;
+  left: 35px;
+
+  transform: rotate(20deg);
+}
+
+.leaf-2 {
+  top: 45px;
+  left: 3px;
+
+  transform: rotate(-35deg);
+}
+
+.leaf-3 {
+  top: 83px;
+  left: 39px;
+
+  transform: rotate(25deg);
+}
+
+
+/* ========================================
+   QUOTE CARD
+======================================== */
+
+.quote-card {
+  position: absolute;
+
+  right: 50px;
+  bottom: 54px;
+
+  width: 180px;
+
+  padding: 14px 17px 15px;
+
+  border-radius: 13px;
+
+  background:
+    rgba(16, 69, 30, 0.83);
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.18);
+
+  backdrop-filter: blur(8px);
+
+  z-index: 5;
+}
+
+.quote-mark {
+  font-size: 29px;
+
+  line-height: 18px;
+
+  font-weight: 800;
+
+  color: #51aa5e;
+
+  margin-bottom: 5px;
+}
+
+.quote-card p {
+  color: #f5fff5;
+
+  font-size: 12px;
+
+  line-height: 1.4;
+
+  font-weight: 500;
+}
+
+.quote-line {
+  width: 27px;
+  height: 2px;
+
+  margin-top: 11px;
+
+  border-radius: 10px;
+
+  background: #63b56e;
+}
+
+
+/* ========================================
+   TABLET
+======================================== */
+
+@media (max-width: 1100px) {
+
+  .content {
+    width: 61%;
+
+    padding-left: 38px;
+    padding-right: 25px;
+  }
+
+  .image-area {
+    width: 44%;
+  }
+
+  .content h1 {
+    font-size: 48px;
+  }
+
+  .feature-grid {
+    max-width: 610px;
+  }
+
+  .bottom-section {
+    max-width: 610px;
+  }
+
+  .quote-card {
+    right: 25px;
+    bottom: 35px;
+  }
+}
+
+
+/* ========================================
+   SMALL TABLET
+======================================== */
+
+@media (max-width: 850px) {
+
+  .hero {
+    min-height: auto;
+
+    display: block;
+
+    padding-bottom: 30px;
+  }
+
+  .content {
+    width: 100%;
+
+    min-height: auto;
+
+    padding: 45px 30px 30px;
+  }
+
+  .image-area {
+    position: relative;
+
+    width: calc(100% - 40px);
+
+    height: 430px;
+
+    margin: 0 20px;
+
+    border-radius: 25px;
+
+    overflow: hidden;
+  }
+
+  .wheat-image {
+    clip-path: none;
+
+    transform: scale(1.01);
+  }
+
+  .image-overlay {
+    clip-path: none;
+  }
+
+  .feature-grid {
+    max-width: 100%;
+  }
+
+  .bottom-section {
+    max-width: 100%;
+  }
+
+  .dots-top {
+    display: none;
+  }
+
+  .decorative-wheat {
+    display: none;
+  }
+}
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 600px) {
+
+  .content {
+    padding: 30px 20px 25px;
+  }
+
+  .badge {
+    font-size: 8px;
+  }
+
+  .content h1 {
+    font-size: 42px;
+
+    letter-spacing: -1.8px;
+  }
+
+  .intro {
+    font-size: 12px;
+  }
+
+  .feature-grid {
+    grid-template-columns: 1fr;
+
+    gap: 10px;
+  }
+
+  .feature-card {
+    min-height: 145px;
+
+    padding: 18px;
+  }
+
+  .bottom-section {
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
+
+    padding: 15px;
+  }
+
+  .why-section {
+    grid-column: 1 / -1;
+
+    border-bottom: 1px solid #dfe8df;
+
+    padding-bottom: 12px;
+  }
+
+  .small-feature {
+    border-left: none;
+  }
+
+  .image-area {
+    height: 370px;
+
+    width: calc(100% - 30px);
+
+    margin: 0 15px;
+
+    border-radius: 20px;
+  }
+
+  .quote-card {
+    right: 20px;
+
+    bottom: 20px;
+
+    width: 175px;
+  }
+}
+
+
+/* ========================================
+   VERY SMALL MOBILE
+======================================== */
+
+@media (max-width: 400px) {
+
+  .content h1 {
+    font-size: 36px;
+  }
+
+  .intro {
+    font-size: 11px;
+  }
+
+  .image-area {
+    height: 330px;
+  }
+
+  .quote-card {
+    width: 155px;
+
+    padding: 12px;
+  }
+
+  .quote-card p {
+    font-size: 10px;
+  }
+}

@@ -1,0 +1,59 @@
+# ─────────────────────────────────────────────────────────────
+# WheatGuard AI – Backend Requirements
+# Python 3.11+
+# ─────────────────────────────────────────────────────────────
+
+# Web framework
+fastapi==0.111.0
+uvicorn[standard]==0.29.0
+python-multipart==0.0.9
+
+# Data validation
+pydantic==2.7.1
+pydantic-settings==2.2.1
+
+# Configuration
+python-dotenv==1.0.1
+
+# ─── Machine Learning ────────────────────────────────────────
+torch==2.3.0
+torchvision==0.18.0
+timm==0.9.16
+
+# Data science
+numpy==1.26.4
+pandas==2.2.2
+scikit-learn==1.4.2
+opencv-python-headless==4.9.0.80
+Pillow==10.3.0
+
+# Visualization
+matplotlib==3.8.4
+plotly==5.22.0
+seaborn==0.13.2
+
+# ─── Database ────────────────────────────────────────────────
+supabase==2.4.6
+httpx==0.27.0
+
+# ─── MLOps (optional) ────────────────────────────────────────
+mlflow==2.13.0
+
+# ─── Code quality ────────────────────────────────────────────
+black==24.4.2
+ruff==0.4.4
+
+# ─── Testing ─────────────────────────────────────────────────
+pytest==8.2.0
+pytest-asyncio==0.23.6
+httpx==0.27.0
+
+# ─── Utilities ───────────────────────────────────────────────
+aiofiles==23.2.1
+python-jose==3.3.0
+passlib==1.7.4
+cryptography==50.0.1
+
+# ─── LLM & Reports ───────────────────────────────────────────
+# OpenRouter needs no SDK — called over httpx (already required by supabase).
+python-pptx==1.0.2

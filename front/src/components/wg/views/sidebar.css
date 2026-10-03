@@ -1,0 +1,210 @@
+/* ──────────────────────────────────────────────────────────────────────
+   WheatGuard user sidebar theme (self-contained, no Tailwind @theme needed).
+
+   Design rules
+   - Strong fill is reserved for ONE thing: the "New scan" CTA (plus logo/avatar).
+   - Active nav item = soft tint + left accent bar (quiet).
+   - Selected recent scan = white card with outline (distinct from nav).
+   - Only ONE element at a time should carry aria-current="page".
+
+   Light = pale mint panel, deep-teal CTA.
+   Dark  = deep teal panel, bright aqua CTA.
+   ────────────────────────────────────────────────────────────────────── */
+
+:root {
+  --sb-bg: #ffffff;
+  --sb-hover: #f0f7f4;
+  --sb-press: #e3f1ec;
+  --sb-line: #e5eaea;
+  --sb-ink: #111827;
+  --sb-muted: #4b5563;
+  --sb-faint: #6b7280;
+
+  /* active nav item = same look as the "Follow-up reminder" pill */
+  --sb-active-bg: #e6f7f0;
+  --sb-active-ink: #0a7a5a;
+  --sb-active-bar: #0a7a5a;
+
+  /* selected recent scan */
+  --sb-scan-bg: #e6f7f0;
+  --sb-scan-line: #b9ead6;
+
+  /* "New scan" = same flat green as the "Back" button (no gradient/shadow) */
+  --sb-cta-bg: #0a7a5a;
+  --sb-cta-ink: #ffffff;
+  --sb-cta-shadow: none;
+
+  --sb-focus: #0a7a5a;
+}
+
+.dark {
+  --sb-bg: #0f3a3a;
+  --sb-hover: #164848;
+  --sb-press: #1d5857;
+  --sb-line: #1f5250;
+  --sb-ink: #dcfbf4;
+  --sb-muted: #8fcfc4;
+  --sb-faint: #6fb3a8;
+
+  --sb-active-bg: rgba(94, 234, 212, 0.14);
+  --sb-active-ink: #5eead4;
+  --sb-active-bar: #5eead4;
+
+  --sb-scan-bg: #164848;
+  --sb-scan-line: #5eead4;
+
+  --sb-cta-bg: #2dd4bf;
+  --sb-cta-ink: #04302c;
+  --sb-cta-shadow: none;
+
+  --sb-focus: #5eead4;
+}
+
+/* ── Watermark artwork (SidebarArt): faint, non-interactive, theme-aware ── */
+.wg-sb-art {
+  opacity: 0.16;                    /* gentle watermark over the panel */
+  transition: opacity 200ms ease;
+}
+.wg-sb-art svg {                    /* stretch the artwork to fill the whole rail */
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.dark .wg-sb-art { opacity: 0.22; } /* a touch more visible on the dark panel */
+
+/* Shield + wheat-ear emblem follows the panel text colour so it recolors on theme */
+.wg-art-logo { color: var(--sb-ink); }
+/* Leaves keep their own green gradient art, just slightly softened */
+.wg-art-leaf { opacity: 0.9; }
+
+/* ── Surfaces & text ─────────────────────────────────────────────────── */
+.wg-sb-root   { background: var(--sb-bg); color: var(--sb-ink); }
+.wg-sb-edge-r { border-right: 1px solid var(--sb-line); }
+.wg-sb-edge-t { border-top: 1px solid var(--sb-line); }
+.wg-sb-muted  { color: var(--sb-muted); }
+.wg-sb-faint  { color: var(--sb-faint); }
+.wg-sb-ink    { color: var(--sb-ink); }
+.wg-sb-menu   { border: 1px solid var(--sb-line); }
+
+/* ── Logo tile + avatar ──────────────────────────────────────────────── */
+.wg-sb-badge {
+  background: var(--sb-cta-bg);
+  color: var(--sb-cta-ink);
+  box-shadow: var(--sb-cta-shadow);
+}
+
+/* ── Links: nav items, recent scans, profile button, collapse toggle ── */
+.wg-sb-link {
+  position: relative;
+  color: var(--sb-muted);
+  border-radius: 10px;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    box-shadow 150ms ease,
+    transform 100ms ease;
+}
+.wg-sb-link:hover  { background: var(--sb-hover); color: var(--sb-ink); }
+.wg-sb-link:active { background: var(--sb-press); transform: scale(0.985); }
+
+/* Active nav item: soft tint + left accent bar */
+.wg-sb-link[aria-current="page"],
+.wg-sb-link[aria-current="page"]:hover,
+.wg-sb-link[aria-current="page"]:active {
+  background: var(--sb-active-bg);
+  color: var(--sb-active-ink);
+  box-shadow: inset 3px 0 0 var(--sb-active-bar);
+  font-weight: 600;
+}
+
+/* ── Recent scans ────────────────────────────────────────────────────── */
+.wg-sb-scan {
+  display: block;
+  padding: 8px 14px;
+}
+.wg-sb-scan-title {
+  display: block;
+  font-size: 14px;
+  line-height: 1.3;
+}
+.wg-sb-scan-meta {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  line-height: 1.3;
+  color: var(--sb-faint);
+}
+
+/* Selected scan: outlined card, clearly different from the nav item.
+   Selector is chained to out-rank the generic [aria-current] rule above. */
+.wg-sb-link.wg-sb-scan[aria-current="page"],
+.wg-sb-link.wg-sb-scan[aria-current="page"]:hover,
+.wg-sb-link.wg-sb-scan[aria-current="page"]:active {
+  background: var(--sb-scan-bg);
+  color: var(--sb-active-ink);
+  box-shadow: 0 0 0 1px var(--sb-scan-line);
+  font-weight: 600;
+}
+.wg-sb-link.wg-sb-scan[aria-current="page"] .wg-sb-scan-meta {
+  color: var(--sb-muted);
+}
+
+/* ── Section label ("Recent scans") with divider ─────────────────────── */
+.wg-sb-section {
+  margin: 20px 14px 6px;
+  padding-top: 16px;
+  border-top: 1px solid var(--sb-line);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sb-faint);
+}
+
+/* ── Primary "New scan" button (the only strong fill in the sidebar) ── */
+.wg-sb-cta {
+  background: var(--sb-cta-bg);
+  color: var(--sb-cta-ink);
+  box-shadow: var(--sb-cta-shadow);
+  transition: filter 150ms ease, transform 100ms ease, box-shadow 150ms ease;
+}
+.wg-sb-cta:hover  { filter: brightness(1.06); }
+.wg-sb-cta:active { transform: translateY(1px) scale(0.99); filter: brightness(0.95); }
+
+/* ── Profile block: keep long names/emails from breaking the layout ─── */
+.wg-sb-truncate {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Icons: no custom colour, they follow the text colour ─────────── */
+.wg-sb-root svg {
+  color: inherit;
+  fill: none;
+  stroke: currentColor;
+}
+.wg-sb-cta svg { color: var(--sb-cta-ink); }
+
+/* ── Focus ───────────────────────────────────────────────────────────── */
+.wg-sb-root a:focus-visible,
+.wg-sb-root button:focus-visible {
+  outline: 2px solid var(--sb-focus);
+  outline-offset: 2px;
+}
+
+/* ── Reduced motion ──────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .wg-sb-link,
+  .wg-sb-cta {
+    transition: none;
+  }
+  .wg-sb-link:active,
+  .wg-sb-cta:active {
+    transform: none;
+  }
+  .wg-sb-art {
+    transition: none;
+  }
+}

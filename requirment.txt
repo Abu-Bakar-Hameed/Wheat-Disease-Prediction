@@ -1,0 +1,1757 @@
+COMPLETE END-TO-END AI PROJECT: WHEAT DISEASE PREDICTION SYSTEM
+
+You are a senior Machine Learning Engineer, Computer Vision Engineer, Backend Engineer, MLOps Engineer, and Full-Stack Developer.
+
+Build a complete production-quality **Wheat Disease Prediction System** from scratch.
+
+The project must be suitable for:
+
+- Final Year Project
+- University demonstration
+- GitHub portfolio
+- AI/ML portfolio
+- Real-world agricultural AI prototype
+
+Do NOT create a toy project.
+
+The system must include:
+
+1. Dataset management
+2. Data preprocessing
+3. Exploratory Data Analysis
+4. Data augmentation
+5. Train/validation/test splitting
+6. Transfer-learning based image classification
+7. Model evaluation
+8. Confusion matrix
+9. Classification report
+10. Training curves
+11. Model checkpointing
+12. Early stopping
+13. Class imbalance handling
+14. Prediction API
+15. Web interface
+16. Confidence score
+17. Explainable AI using Grad-CAM
+18. Disease information
+19. Treatment/prevention recommendations
+20. Prediction history
+21. Logging
+22. Testing
+23. Docker deployment
+24. Documentation
+25. Reproducible training pipeline
+
+---
+
+1. PROJECT NAME
+
+---
+
+Use the project name:
+
+WheatGuard AI
+
+Subtitle:
+
+AI-Powered Wheat Disease Detection and Recommendation System
+
+---
+
+2. MAIN OBJECTIVE
+
+---
+
+Build a system where a farmer/student/researcher can upload an image of a wheat leaf or wheat plant.
+
+The system should:
+
+1. Accept image
+2. Validate image
+3. Resize and normalize image
+4. Run trained deep-learning model
+5. Predict disease class
+6. Calculate confidence
+7. Display top predictions
+8. Display Grad-CAM explanation
+9. Display disease information
+10. Display possible prevention/treatment guidance
+11. Save prediction history
+12. Provide API access
+
+The application must clearly distinguish between:
+
+- model prediction
+- confidence
+- agronomic recommendation
+
+Do not claim that the AI provides a guaranteed diagnosis.
+
+Use wording such as:
+
+"AI Prediction"
+
+and:
+
+"Consult an agricultural expert for confirmation."
+
+---
+
+3. TECHNOLOGY STACK
+
+---
+
+Use:
+
+Backend:
+
+- Python 3.11+
+- FastAPI
+- Uvicorn
+- Pydantic
+
+Machine Learning:
+
+- PyTorch
+- torchvision
+- scikit-learn
+- NumPy
+- Pandas
+- OpenCV
+- Pillow
+
+Visualization:
+
+- Matplotlib
+- Plotly
+
+Explainability:
+
+- Grad-CAM
+
+Database:
+
+- SQLite for local development
+- SQLAlchemy ORM
+
+Frontend:
+
+- Streamlit for the first complete version
+
+Optional production frontend:
+
+- React/Next.js
+
+Testing:
+
+- pytest
+
+Code quality:
+
+- black
+- ruff
+
+Configuration:
+
+- python-dotenv
+
+MLOps:
+
+- MLflow if practical
+
+Deployment:
+
+- Docker
+- docker-compose
+
+---
+
+4. PROJECT STRUCTURE
+
+---
+
+Create this structure:
+
+wheatguard-ai/
+
+├── app/  
+│ ├── **init**.py  
+│ ├── main.py  
+│ │  
+│ ├── api/  
+│ │ ├── **init**.py  
+│ │ ├── routes/  
+│ │ │ ├── health.py  
+│ │ │ ├── prediction.py  
+│ │ │ └── history.py  
+│ │  
+│ ├── core/  
+│ │ ├── config.py  
+│ │ ├── logging.py  
+│ │ └── security.py  
+│ │  
+│ ├── ml/  
+│ │ ├── **init**.py  
+│ │ ├── model.py  
+│ │ ├── inference.py  
+│ │ ├── preprocessing.py  
+│ │ ├── gradcam.py  
+│ │ └── utils.py  
+│ │  
+│ ├── database/  
+│ │ ├── database.py  
+│ │ ├── models.py  
+│ │ └── crud.py  
+│ │  
+│ └── schemas/  
+│ ├── prediction.py  
+│ └── history.py  
+│  
+├── frontend/  
+│ └── streamlit_app.py  
+│  
+├── data/  
+│ ├── raw/  
+│ ├── processed/  
+│ ├── train/  
+│ ├── validation/  
+│ └── test/  
+│  
+├── models/  
+│ ├── checkpoints/  
+│ ├── best_model.pth  
+│ └── class_names.json  
+│  
+├── notebooks/  
+│ ├── 01_eda.ipynb  
+│ ├── 02_training.ipynb  
+│ └── 03_evaluation.ipynb  
+│  
+├── scripts/  
+│ ├── prepare_dataset.py  
+│ ├── train.py  
+│ ├── evaluate.py  
+│ └── predict.py  
+│  
+├── tests/  
+│ ├── test_health.py  
+│ ├── test_prediction.py  
+│ ├── test_preprocessing.py  
+│ └── test_model.py  
+│  
+├── artifacts/  
+│ ├── plots/  
+│ ├── reports/  
+│ └── gradcam/  
+│  
+├── .env.example  
+├── .gitignore  
+├── Dockerfile  
+├── docker-compose.yml  
+├── requirements.txt  
+├── README.md  
+└── LICENSE
+
+Create all required **init**.py files.
+
+---
+
+5. DATASET
+
+---
+
+The application must NOT assume that a specific dataset is already available.
+
+Create a configurable dataset system.
+
+The dataset path must be controlled through environment/configuration.
+
+Support a directory structure such as:
+
+data/raw/
+
+```
+Healthy/
+Disease_1/
+Disease_2/
+Disease_3/
+
+```
+
+Automatically discover classes from directories.
+
+Generate:
+
+models/class_names.json
+
+Do not hard-code disease classes inside the ML model.
+
+Validate:
+
+- corrupted images
+- unsupported files
+- empty directories
+- duplicate images if possible
+- class imbalance
+- extremely small classes
+
+Generate a dataset report containing:
+
+- total images
+- number of classes
+- images per class
+- image dimensions
+- missing/corrupt files
+- class distribution
+
+---
+
+6. DATA PREPROCESSING
+
+---
+
+Implement:
+
+- image loading
+- RGB conversion
+- resizing
+- normalization
+- augmentation
+- tensor conversion
+
+Default image size:
+
+224 x 224
+
+Training augmentation:
+
+- RandomResizedCrop
+- RandomHorizontalFlip
+- RandomVerticalFlip when appropriate
+- RandomRotation
+- ColorJitter
+- RandomAffine
+
+Validation/test:
+
+Only deterministic transformations.
+
+Do NOT apply random augmentation to validation/test data.
+
+Make preprocessing reusable between:
+
+training
+
+and
+
+inference.
+
+Avoid train/test leakage.
+
+---
+
+7. DATA SPLITTING
+
+---
+
+Implement configurable splitting:
+
+Default:
+
+70% train  
+15% validation  
+15% test
+
+Use stratified splitting where appropriate.
+
+Use a fixed random seed.
+
+Default seed:
+
+42
+
+Make seed configurable.
+
+Ensure that images from the same source/near-duplicate samples are not accidentally distributed across train and test when metadata allows detection.
+
+---
+
+8. EXPLORATORY DATA ANALYSIS
+
+---
+
+Create EDA functionality.
+
+Generate:
+
+1. Class distribution chart
+2. Sample images per class
+3. Image dimension statistics
+4. Dataset summary
+5. Augmentation examples
+
+Save plots into:
+
+artifacts/plots/
+
+---
+
+9. MODEL
+
+---
+
+Use transfer learning.
+
+Preferred architecture:
+
+EfficientNet-B0
+
+If unavailable or problematic, use:
+
+ResNet50
+
+Do NOT train a large CNN from scratch unless explicitly requested.
+
+Load pretrained ImageNet weights when available.
+
+Replace the classifier with the correct number of dataset classes.
+
+Example:
+
+model.classifier = new classification head
+
+The model must dynamically adapt to the discovered class count.
+
+---
+
+10. TRAINING
+
+---
+
+Create:
+
+scripts/train.py
+
+Training features:
+
+- configurable epochs
+- configurable batch size
+- configurable learning rate
+- AdamW optimizer
+- learning-rate scheduler
+- early stopping
+- model checkpointing
+- best validation model
+- training history
+
+Default configuration:
+
+epochs = 20
+
+batch_size = 32
+
+learning_rate = 0.0001
+
+weight_decay = 0.0001
+
+patience = 5
+
+Make all parameters configurable.
+
+Save:
+
+models/best_model.pth
+
+models/class_names.json
+
+artifacts/reports/training_history.json
+
+---
+
+11. CLASS IMBALANCE
+
+---
+
+Detect class imbalance.
+
+Implement optional:
+
+- weighted CrossEntropyLoss
+
+or
+
+- WeightedRandomSampler
+
+Make this configurable.
+
+Print class weights during training.
+
+Do not blindly apply oversampling if the dataset is already balanced.
+
+---
+
+12. MODEL EVALUATION
+
+---
+
+Create:
+
+scripts/evaluate.py
+
+Evaluate on TEST ONLY.
+
+Generate:
+
+- accuracy
+- precision
+- recall
+- F1-score
+- macro F1
+- weighted F1
+- per-class metrics
+- confusion matrix
+
+Save:
+
+artifacts/reports/classification_report.json
+
+artifacts/plots/confusion_matrix.png
+
+artifacts/plots/training_curves.png
+
+Print a clean terminal summary.
+
+---
+
+13. TOP-K PREDICTIONS
+
+---
+
+Inference must return:
+
+Top 1 prediction
+
+Top 3 predictions
+
+Each result must contain:
+
+- class
+- probability
+- percentage
+
+Example:
+
+Prediction:  
+Leaf Rust
+
+Confidence:  
+92.41%
+
+Top predictions:
+
+1. Leaf Rust — 92.41%
+2. Healthy — 4.13%
+3. Yellow Rust — 2.21%
+
+---
+
+14. CONFIDENCE HANDLING
+
+---
+
+Implement a configurable confidence threshold.
+
+Example:
+
+CONFIDENCE_THRESHOLD=0.60
+
+If confidence is below threshold:
+
+Do NOT pretend the prediction is reliable.
+
+Return:
+
+"Low confidence prediction. Please upload a clearer image or consult an agricultural expert."
+
+Make threshold configurable through .env.
+
+Do not use confidence as proof of correctness.
+
+---
+
+15. GRAD-CAM
+
+---
+
+Implement Explainable AI.
+
+Create:
+
+app/ml/gradcam.py
+
+Use Grad-CAM to highlight image regions contributing to the model prediction.
+
+Return:
+
+- original image
+- Grad-CAM heatmap
+- overlay image
+
+Save generated explanations into:
+
+artifacts/gradcam/
+
+The UI should display:
+
+"Why did the model make this prediction?"
+
+Then show the Grad-CAM result.
+
+Clearly explain that Grad-CAM is an approximate model explanation and not a scientific diagnosis.
+
+---
+
+16. DISEASE INFORMATION DATABASE
+
+---
+
+Create a disease information configuration.
+
+For every discovered class, allow metadata such as:
+
+- disease name
+- description
+- common symptoms
+- prevention
+- general management guidance
+- severity
+- disclaimer
+
+Do not invent scientifically unsupported pesticide dosage instructions.
+
+If disease-specific treatment information is not verified, show:
+
+"Consult a local agricultural extension officer for treatment recommendations."
+
+Keep disease metadata separate from the ML model.
+
+Suggested file:
+
+app/ml/disease_info.json
+
+---
+
+17. FASTAPI BACKEND
+
+---
+
+Create:
+
+app/main.py
+
+Endpoints:
+
+GET /health
+
+Response:
+
+{  
+"status": "healthy"  
+}
+
+POST /api/v1/predict
+
+Accept multipart image upload.
+
+Return:
+
+{  
+"prediction": "...",  
+"confidence": 0.92,  
+"confidence_percentage": 92.0,  
+"top_predictions": [],  
+"low_confidence": false,  
+"recommendation": "...",  
+"gradcam_available": true  
+}
+
+GET /api/v1/history
+
+Return recent predictions.
+
+GET /docs
+
+FastAPI Swagger documentation should work.
+
+---
+
+18. IMAGE VALIDATION
+
+---
+
+Before inference:
+
+Validate:
+
+- MIME type
+- extension
+- file size
+- image readability
+- RGB conversion
+
+Allowed:
+
+jpg  
+jpeg  
+png  
+webp
+
+Set a reasonable maximum upload size.
+
+Return clean HTTP errors.
+
+Never crash because a user uploads a corrupted image.
+
+---
+
+19. DATABASE
+
+---
+
+Use SQLite + SQLAlchemy.
+
+Create table:
+
+predictions
+
+Fields:
+
+id  
+filename  
+predicted_class  
+confidence  
+created_at  
+model_version
+
+Optional:
+
+top_predictions_json  
+image_hash
+
+Do not store uploaded images permanently unless explicitly configured.
+
+---
+
+20. STREAMLIT FRONTEND
+
+---
+
+Create:
+
+frontend/streamlit_app.py
+
+UI should look professional.
+
+Application title:
+
+"WheatGuard AI"
+
+Subtitle:
+
+"AI-Powered Wheat Disease Detection"
+
+Sidebar:
+
+- About
+- Model information
+- Confidence threshold
+- Disclaimer
+
+Main page:
+
+Upload Wheat Image
+
+Display uploaded image.
+
+Button:
+
+"Analyze Image"
+
+After prediction display:
+
+Prediction
+
+Confidence
+
+Risk/status
+
+Top 3 predictions
+
+Disease information
+
+Prevention
+
+Management guidance
+
+Grad-CAM explanation
+
+Prediction history
+
+Use cards/columns where appropriate.
+
+Do not create an ugly default Streamlit interface.
+
+Use custom CSS carefully.
+
+Make the application responsive.
+
+---
+
+21. FRONTEND UX
+
+---
+
+The interface should handle:
+
+1. No image uploaded
+2. Valid image
+3. Invalid image
+4. Low confidence
+5. Model unavailable
+6. API unavailable
+7. Unexpected server error
+
+Show user-friendly messages.
+
+Do not expose Python stack traces to normal users.
+
+---
+
+22. API/FULL SYSTEM ARCHITECTURE
+
+---
+
+Use this architecture:
+
+```
+            USER
+              |
+              v
+      STREAMLIT FRONTEND
+              |
+              v
+         FASTAPI
+              |
+      +-------+-------+
+      |               |
+      v               v
+  PREPROCESSING    DATABASE
+      |
+      v
+ ML INFERENCE
+      |
+  +---+---+
+  |       |
+  v       v
+
+```
+
+PREDICTION GRAD-CAM  
+|  
+v  
+DISEASE INFORMATION  
+|  
+v  
+RESPONSE TO USER
+
+---
+
+23. CONFIGURATION
+
+---
+
+Create .env.example:
+
+APP_NAME=WheatGuard AI
+
+MODEL_PATH=models/best_model.pth
+
+CLASS_NAMES_PATH=models/class_names.json
+
+CONFIDENCE_THRESHOLD=0.60
+
+IMAGE_SIZE=224
+
+DATABASE_URL=sqlite:///./wheatguard.db
+
+MAX_UPLOAD_SIZE_MB=10
+
+DEVICE=auto
+
+Set DEVICE options:
+
+auto  
+cpu  
+cuda
+
+Automatically select CUDA when available.
+
+---
+
+24. LOGGING
+
+---
+
+Implement structured application logging.
+
+Log:
+
+- application startup
+- model loading
+- prediction requests
+- prediction result
+- errors
+- inference duration
+
+Do not log sensitive user data.
+
+---
+
+25. ERROR HANDLING
+
+---
+
+Create proper custom exceptions for:
+
+ModelNotLoadedError
+
+InvalidImageError
+
+UnsupportedImageError
+
+LowConfidenceError if appropriate
+
+DatabaseError
+
+Never expose internal stack traces through API responses.
+
+---
+
+26. TESTING
+
+---
+
+Create pytest tests.
+
+Test:
+
+1. Health endpoint
+2. Invalid image
+3. Unsupported file
+4. Image preprocessing
+5. Model loading
+6. Prediction response schema
+7. Top-k prediction logic
+8. Confidence threshold
+9. Database insertion
+10. History endpoint
+
+Tests must be runnable with:
+
+pytest
+
+---
+
+27. SECURITY
+
+---
+
+Implement basic security practices.
+
+Do not:
+
+- hard-code secrets
+- commit .env
+- expose internal errors
+- trust uploaded filenames
+- execute uploaded files
+
+Sanitize filenames.
+
+Limit upload size.
+
+Validate content type.
+
+---
+
+28. DOCKER
+
+---
+
+Create:
+
+Dockerfile
+
+docker-compose.yml
+
+The application must be runnable using:
+
+docker compose up --build
+
+Provide separate development instructions for CPU.
+
+Do not assume GPU is available.
+
+---
+
+29. REQUIREMENTS
+
+---
+
+Create a clean requirements.txt.
+
+Pin compatible versions.
+
+Do not unnecessarily install huge libraries.
+
+Separate optional ML/GPU dependencies where appropriate.
+
+---
+
+30. README
+
+---
+
+Create a professional README.md.
+
+Include:
+
+WheatGuard AI
+
+Overview
+
+Problem Statement
+
+Objectives
+
+Features
+
+Architecture
+
+Dataset
+
+Installation
+
+Environment Variables
+
+Training
+
+Evaluation
+
+Running API
+
+Running Streamlit
+
+Docker
+
+API Documentation
+
+Model
+
+Explainable AI
+
+Results
+
+Limitations
+
+Future Improvements
+
+Disclaimer
+
+Project Structure
+
+License
+
+Include exact commands.
+
+Example:
+
+python -m venv .venv
+
+Windows:
+
+.venv\Scripts\activate
+
+Linux/macOS:
+
+source .venv/bin/activate
+
+pip install -r requirements.txt
+
+Train:
+
+python scripts/train.py
+
+Evaluate:
+
+python scripts/evaluate.py
+
+Run API:
+
+uvicorn app.main:app --reload
+
+Run Streamlit:
+
+streamlit run frontend/streamlit_app.py
+
+---
+
+31. MODEL VERSIONING
+
+---
+
+Every trained model should have metadata:
+
+model_version
+
+training_date
+
+dataset_version
+
+class_names
+
+image_size
+
+architecture
+
+validation_accuracy
+
+test_accuracy
+
+macro_f1
+
+weighted_f1
+
+Store metadata in:
+
+models/model_metadata.json
+
+---
+
+32. REPRODUCIBILITY
+
+---
+
+Create a centralized seed utility.
+
+Set seeds for:
+
+Python random
+
+NumPy
+
+PyTorch
+
+CUDA when available
+
+Document that exact reproducibility may vary between hardware/platforms.
+
+---
+
+33. PERFORMANCE
+
+---
+
+Optimize inference.
+
+The model should load ONCE when the API starts.
+
+Do NOT load the PyTorch model for every request.
+
+Use caching where appropriate in Streamlit.
+
+Use torch.no_grad() during inference.
+
+Set model.eval() during prediction.
+
+Measure inference time.
+
+Return:
+
+inference_time_ms
+
+---
+
+34. MODEL IMPROVEMENTS
+
+---
+
+Structure the code so later we can add:
+
+- EfficientNet-B2
+- ResNet
+- ConvNeXt
+- Vision Transformer
+- ensemble models
+
+Do not over-engineer the first implementation.
+
+Start with EfficientNet-B0.
+
+---
+
+35. DATA AUGMENTATION VISUALIZATION
+
+---
+
+Create a script/notebook showing:
+
+Original image
+
+Augmented image 1
+
+Augmented image 2
+
+Augmented image 3
+
+This is required for the project report.
+
+---
+
+36. TRAINING CURVES
+
+---
+
+Plot:
+
+Training Loss
+
+Validation Loss
+
+Training Accuracy
+
+Validation Accuracy
+
+Save:
+
+artifacts/plots/training_curves.png
+
+---
+
+37. CONFUSION MATRIX
+
+---
+
+Generate a readable confusion matrix.
+
+Include:
+
+- class names
+- counts
+- normalized values if useful
+
+Save it.
+
+---
+
+38. API RESPONSE MODEL
+
+---
+
+Use Pydantic schemas.
+
+Create strict response models.
+
+PredictionResponse must contain:
+
+prediction
+
+confidence
+
+confidence_percentage
+
+top_predictions
+
+low_confidence
+
+recommendation
+
+inference_time_ms
+
+model_version
+
+---
+
+39. HEALTH CHECK
+
+---
+
+Health endpoint should verify:
+
+API running
+
+model loaded
+
+database accessible
+
+Return status information.
+
+Example:
+
+{  
+"status": "healthy",  
+"model_loaded": true,  
+"database": true  
+}
+
+---
+
+40. MODEL LOADING
+
+---
+
+Create a ModelManager class.
+
+Responsibilities:
+
+- load model
+- load class names
+- preprocess image
+- predict
+- return top-k
+- expose model metadata
+
+Use singleton-style initialization where appropriate.
+
+---
+
+41. CLEAN CODE
+
+---
+
+Follow:
+
+PEP8
+
+SOLID principles where practical
+
+Type hints
+
+Docstrings
+
+Meaningful variable names
+
+Small functions
+
+No giant files
+
+No duplicated preprocessing logic
+
+No hard-coded paths
+
+No magic numbers
+
+---
+
+42. COMMAND LINE INTERFACE
+
+---
+
+Support:
+
+python scripts/predict.py --image path/to/image.jpg
+
+Output:
+
+Prediction  
+Confidence  
+Top 3 predictions  
+Inference time
+
+---
+
+43. OPTIONAL MLflow
+
+---
+
+If MLflow is included, track:
+
+- epochs
+- learning rate
+- batch size
+- architecture
+- train loss
+- validation loss
+- validation accuracy
+- macro F1
+- test metrics
+
+Do not make the application dependent on MLflow for inference.
+
+---
+
+44. UNKNOWN / OUT-OF-DISTRIBUTION IMAGES
+
+---
+
+Design the system so that it does not blindly claim every uploaded image is a wheat disease.
+
+At minimum:
+
+- show confidence
+- warn about low confidence
+- clearly state supported dataset classes
+- recommend uploading a clear wheat image
+
+If practical, implement an additional image-quality check.
+
+Do NOT falsely claim that the model can detect every plant disease.
+
+---
+
+45. PROJECT REPORT SUPPORT
+
+---
+
+Create:
+
+docs/
+
+Inside create:
+
+docs/project_report_outline.md
+
+Include sections:
+
+1. Introduction
+2. Problem Statement
+3. Existing System
+4. Proposed System
+5. Objectives
+6. Literature Review
+7. Methodology
+8. Dataset
+9. Data Preprocessing
+10. Model Architecture
+11. Training
+12. Evaluation
+13. Explainable AI
+14. System Architecture
+15. API
+16. User Interface
+17. Results
+18. Limitations
+19. Future Work
+20. Conclusion
+
+---
+
+46. IMPLEMENTATION ORDER
+
+---
+
+IMPORTANT:
+
+Do NOT generate everything randomly at once.
+
+Implement in this exact order:
+
+PHASE 1  
+Project structure
+
+PHASE 2  
+Configuration
+
+PHASE 3  
+Dataset loader
+
+PHASE 4  
+EDA
+
+PHASE 5  
+Preprocessing
+
+PHASE 6  
+Train/validation/test split
+
+PHASE 7  
+EfficientNet model
+
+PHASE 8  
+Training pipeline
+
+PHASE 9  
+Evaluation
+
+PHASE 10  
+Inference engine
+
+PHASE 11  
+Grad-CAM
+
+PHASE 12  
+Disease information
+
+PHASE 13  
+Database
+
+PHASE 14  
+FastAPI
+
+PHASE 15  
+Streamlit
+
+PHASE 16  
+Testing
+
+PHASE 17  
+Docker
+
+PHASE 18  
+README/documentation
+
+---
+
+47. IMPORTANT AGENT RULES
+
+---
+
+You are working inside an actual coding workspace.
+
+Before creating files:
+
+1. Inspect the existing repository.
+2. Do not overwrite unrelated existing work.
+3. Detect existing Python environment.
+4. Detect existing dataset.
+5. Detect existing requirements.txt.
+6. Reuse existing compatible components when possible.
+
+Before installing dependencies:
+
+Check the current environment.
+
+Do not install duplicate packages unnecessarily.
+
+If a dependency conflict occurs:
+
+Diagnose it first.
+
+Do not randomly downgrade packages.
+
+---
+
+48. DATASET SAFETY
+
+---
+
+Never silently modify the original raw dataset.
+
+Raw data must remain untouched.
+
+All processed data should go into:
+
+data/processed/
+
+If files are corrupted:
+
+Report them.
+
+Do not silently delete them.
+
+---
+
+49. TRAINING SAFETY
+
+---
+
+Never overwrite the best model without checking validation performance.
+
+Save checkpoints:
+
+checkpoint_epoch_X.pth
+
+Save best model:
+
+best_model.pth
+
+Track:
+
+best validation loss
+
+best validation accuracy
+
+best macro F1
+
+---
+
+50. FINAL QUALITY CHECK
+
+---
+
+After implementation, run:
+
+1. Python syntax checks
+2. Ruff
+3. Unit tests
+4. Dataset validation
+5. Training smoke test
+6. Evaluation smoke test
+7. API startup test
+8. Prediction test
+9. Streamlit startup test
+
+Fix errors before declaring the project complete.
+
+---
+
+51. SMOKE TEST
+
+---
+
+If a real dataset is not available yet:
+
+Create a tiny synthetic/dummy image dataset ONLY for pipeline testing.
+
+Do not present synthetic results as real model performance.
+
+The smoke test should verify:
+
+dataset loader
+
+training
+
+checkpoint saving
+
+evaluation
+
+inference
+
+API
+
+frontend
+
+---
+
+52. FINAL DELIVERABLE
+
+---
+
+At the end, the project must provide:
+
+1. Working ML training pipeline
+2. Working trained-model inference pipeline
+3. Working FastAPI backend
+4. Working Streamlit frontend
+5. Grad-CAM
+6. Database history
+7. Evaluation reports
+8. Docker configuration
+9. Tests
+10. README
+11. Project report outline
+
+---
+
+53. FINAL RESPONSE FROM THE CODING AGENT
+
+---
+
+When finished, report:
+
+PROJECT STATUS
+
+Files created:
+
+[list]
+
+Files modified:
+
+[list]
+
+Dataset:
+
+[number of images]
+
+Classes:
+
+[list]
+
+Model:
+
+architecture
+
+Training:
+
+epochs
+
+Validation results:
+
+accuracy
+
+macro F1
+
+Test results:
+
+accuracy
+
+macro F1
+
+API:
+
+URL
+
+Frontend:
+
+URL
+
+Tests:
+
+passed/failed
+
+Docker:
+
+status
+
+Known limitations:
+
+[list]
+
+Next recommended steps:
+
+[list]
+
+IMPORTANT:
+
+Never fabricate model accuracy.
+
+If the model has not actually been trained on a real dataset, say:
+
+"Model training has not been completed on a real dataset yet."
+
+Do not invent results.
+
+---
+
+START NOW
+
+---
+
+First inspect the existing workspace.
+
+Then create an implementation plan.
+
+Then implement Phase 1.
+
+After each major phase:
+
+1. Run relevant tests/checks.
+2. Fix errors.
+3. Continue to the next phase.
+
+Do not stop at creating boilerplate.
+
+The final goal is a genuinely runnable end-to-end Wheat Disease Prediction AI application.
+
+
+it should be backend of the python FastAPI and frontend next.js and database subabase

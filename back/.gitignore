@@ -1,0 +1,54 @@
+# Environment
+.env
+.env.local
+.env.*.local
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+.venv/
+venv/
+env/
+
+# Models (large files - use DVC or Git LFS)
+models/best_model.pth
+models/checkpoints/*.pth
+*.pth
+
+# Data
+data/raw/
+data/processed/
+data/train/
+data/validation/
+data/test/
+
+# Logs
+logs/
+*.log
+
+# MLflow
+mlruns/
+
+# Artifacts
+artifacts/gradcam/
+artifacts/plots/*.png
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Docker
+*.override.yml

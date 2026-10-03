@@ -1,0 +1,259 @@
+/* Material Symbols is loaded via @import below; Inter and Fraunces are loaded
+   with next/font/google in layout.tsx and exposed through the font variables. */
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap');
+
+@import "tailwindcss";
+@plugin "@tailwindcss/forms";
+
+/* Class-based dark mode: `dark:` utilities respond to a `.dark` class on <html>.
+   Tailwind v4 defaults `dark:` to prefers-color-scheme, so the variant must be
+   declared explicitly to honor the theme toggle button. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ── Design tokens (Tailwind v4 @theme — the single source of truth) ─────
+   The legacy tailwind.config.ts is inert under v4; all shared values live
+   here so utilities like bg-brand-600, rounded-lg, shadow-card, text-muted
+   are generated from one palette. Presentation-only modernization: no new
+   runtime dependency, tokens only. */
+@theme {
+  /* Type — Inter + Fraunces come from next/font variables set on <html>. */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: var(--font-fraunces), ui-serif, Georgia, "Times New Roman", serif;
+
+  /* Brand — wheat-field green */
+  --color-brand-50: #f0fdf4;
+  --color-brand-100: #dcfce7;
+  --color-brand-200: #bbf7d0;
+  --color-brand-300: #86efac;
+  --color-brand-400: #4ade80;
+  --color-brand-500: #22c55e;
+  --color-brand-600: #16a34a;
+  --color-brand-700: #15803d;
+  --color-brand-800: #166534;
+  --color-brand-900: #14532d;
+  --color-brand-950: #052e16;
+
+  /* Wheat — secondary accent */
+  --color-wheat-50: #fefce8;
+  --color-wheat-100: #fef3c7;
+  --color-wheat-200: #fde68a;
+  --color-wheat-300: #fcd34d;
+  --color-wheat-400: #facc15;
+  --color-wheat-500: #eab308;
+  --color-wheat-600: #ca8a04;
+  --color-wheat-700: #a16207;
+
+  /* Surfaces & neutrals */
+  --color-canvas: #f8faf8;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f4f7f4;
+  --color-ink: #17231b;
+  --color-muted: #647067;
+  --color-line: #e5eae5;
+
+  /* Status */
+  --color-success: #16a34a;
+  --color-success-soft: #dcfce7;
+  --color-warning: #d97706;
+  --color-warning-soft: #fef3c7;
+  --color-danger: #dc2626;
+  --color-danger-soft: #fee2e2;
+  --color-info: #2563eb;
+  --color-info-soft: #dbeafe;
+
+  /* Radius — 8 / 12 / 16 / 20 / 24 rhythm */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+
+  /* Elevation — subtle, layered over hairline borders */
+  --shadow-xs: 0 1px 2px rgba(23, 35, 27, 0.04);
+  --shadow-sm: 0 1px 3px rgba(23, 35, 27, 0.06), 0 1px 2px rgba(23, 35, 27, 0.04);
+  --shadow-card: 0 1px 2px rgba(23, 35, 27, 0.04), 0 4px 16px rgba(23, 35, 27, 0.05);
+  --shadow-md: 0 6px 20px rgba(23, 35, 27, 0.08);
+  --shadow-lg: 0 16px 40px rgba(23, 35, 27, 0.12);
+  --shadow-focus: 0 0 0 3px rgba(22, 163, 74, 0.28);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --animate-shimmer: shimmer 1.6s linear infinite;
+  --animate-fade-in: fade-in 0.24s var(--ease-out) both;
+  --animate-scale-in: scale-in 0.18s var(--ease-out) both;
+  --animate-slide-up: slide-up 0.28s var(--ease-out) both;
+  --animate-toast-in: toast-in 0.28s var(--ease-out) both;
+}
+
+/* ── Dark theme tokens ────────────────────────────────────────────────
+   Overriding these variables flips every token-based utility
+   (bg-canvas, text-ink, border-line, bg-surface …) automatically. */
+.dark {
+  color-scheme: dark;
+  /* Deepen canvas and lift surface so cards separate clearly from the page. */
+  --color-canvas: #06110d;
+  --color-surface: #10261c;
+  --color-surface-muted: #163025;
+  --color-ink: #e8f1ea;
+  --color-muted: #a3b5aa;
+  --color-line: #24402f;
+  /* Status: soft fills become deep tints, solid text colors brighten so
+     banners/badges (bg-danger-soft + text-danger …) stay readable on dark. */
+  --color-success: #4ade80;
+  --color-success-soft: #0c2f1a;
+  --color-warning: #fbbf24;
+  --color-warning-soft: #33230a;
+  --color-danger: #f87171;
+  --color-danger-soft: #361414;
+  --color-info: #60a5fa;
+  --color-info-soft: #12233f;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes wg-drawer-in {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+/* ── Auth "Signing you in" loading screen ─────────────────────────── */
+@keyframes wg-indeterminate {
+  0% { transform: translateX(-110%); }
+  100% { transform: translateX(220%); }
+}
+@keyframes wg-dot-blink {
+  0%, 60%, 100% { opacity: 0.2; }
+  30% { opacity: 1; }
+}
+.wg-progress-slide {
+  width: 45%;
+  animation: wg-indeterminate 1.4s ease-in-out infinite;
+}
+.wg-animated-dots span {
+  animation: wg-dot-blink 1.3s infinite;
+}
+.wg-animated-dots span:nth-child(2) { animation-delay: 0.18s; }
+.wg-animated-dots span:nth-child(3) { animation-delay: 0.36s; }
+/* Reduced motion: keep all text static and fully visible */
+@media (prefers-reduced-motion: reduce) {
+  .wg-animated-dots span { animation: none; opacity: 1; }
+}
+
+/* ── Material Symbols ─────────────────────────────────────────────── */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+}
+
+/* ── Custom scrollbars ────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5cf; border-radius: 9999px; border: 2px solid transparent; background-clip: padding-box; }
+::-webkit-scrollbar-thumb:hover { background: #9aa69e; background-clip: padding-box; }
+
+/* ── Scan laser animation ─────────────────────────────────────────── */
+.scanning-line {
+  animation: scanAnimation 2.2s ease-in-out infinite alternate;
+}
+@keyframes scanAnimation {
+  0%   { top: 4%;  opacity: 0.8; }
+  50%  { opacity: 1; }
+  100% { top: 92%; opacity: 0.8; }
+}
+
+/* ── Skeleton shimmer utility ─────────────────────────────────────── */
+.wg-shimmer {
+  background: linear-gradient(90deg, #eef2ee 25%, #f6f8f6 37%, #eef2ee 63%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+.dark .wg-shimmer {
+  background: linear-gradient(90deg, #163025 25%, #1d3d30 37%, #163025 63%);
+  background-size: 200% 100%;
+}
+
+/* ── Base ─────────────────────────────────────────────────────────── */
+html { scroll-behavior: smooth; }
+
+/* Landing anchors: offset for the sticky navbar so section tops aren't hidden */
+#features,
+#diseases,
+#how-it-works,
+#about {
+  scroll-margin-top: 84px;
+}
+
+/* Landing entrance (soft fade when the page becomes ready) */
+@keyframes wg-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.wg-fade-in {
+  animation: wg-fade-in 0.5s ease-out both;
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand-600);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Hide scrollbars on horizontal scroll containers (carousels) while keeping scroll */
+.wg-no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.wg-no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* ── Reduced motion kill-switch ───────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

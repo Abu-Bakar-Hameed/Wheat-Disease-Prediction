@@ -1,0 +1,277 @@
+{
+  "_comment": "WheatGuard AI – Disease Information Database. Each key matches a class name discovered from the dataset. All recommendations are general guidance only. Consult a local agricultural extension officer for confirmed treatment.",
+  "Healthy": {
+    "display_name": "Healthy Wheat",
+    "description": "The wheat plant shows no visible signs of disease or stress. Leaves are green and uniform.",
+    "symptoms": [
+      "Uniform green colouration",
+      "No lesions, pustules, or discolouration",
+      "Normal leaf and stem structure"
+    ],
+    "prevention": [
+      "Continue current agronomic practices",
+      "Monitor regularly for early signs of stress or disease",
+      "Maintain balanced soil nutrition",
+      "Ensure adequate drainage to prevent waterlogging"
+    ],
+    "management": [
+      "No immediate intervention required",
+      "Continue scheduled scouting every 7–10 days",
+      "Record field observations for future reference"
+    ],
+    "severity": "none",
+    "risk_level": "low",
+    "disclaimer": "AI prediction indicates a healthy plant. Regular scouting remains important as early-stage infections may not yet be visually apparent."
+  },
+  "Leaf_Rust": {
+    "display_name": "Leaf Rust (Brown Rust)",
+    "description": "Leaf rust is caused by the fungal pathogen Puccinia triticina. It is one of the most widespread wheat diseases worldwide, capable of causing significant yield losses when conditions favour rapid spread.",
+    "causal_agent": "Puccinia triticina (fungus)",
+    "symptoms": [
+      "Small, round to oval orange-brown pustules (uredinia) on the upper leaf surface",
+      "Pustules scattered irregularly across the leaf blade",
+      "Yellowing around pustule clusters in severe infections",
+      "Black telia (teliospores) may appear late in the season",
+      "Leaves may turn yellow and dry prematurely"
+    ],
+    "favourable_conditions": [
+      "Temperatures between 15–22°C",
+      "Prolonged leaf wetness (dew, rain)",
+      "High relative humidity",
+      "Dense canopy with poor air circulation"
+    ],
+    "prevention": [
+      "Plant resistant or tolerant wheat varieties",
+      "Use certified, disease-free seed",
+      "Rotate crops to break disease cycles",
+      "Avoid late planting that extends the green crop period",
+      "Remove or plough in crop residues after harvest",
+      "Apply balanced fertilisation — avoid excessive nitrogen"
+    ],
+    "management": [
+      "Scout fields regularly and monitor pustule development",
+      "Apply foliar fungicides at first sign of infection (consult local extension for registered products)",
+      "A second application may be needed if infection pressure remains high",
+      "Do not delay treatment — early intervention prevents exponential spread"
+    ],
+    "severity": "high",
+    "risk_level": "high",
+    "disclaimer": "This is an AI-based prediction and NOT a confirmed diagnosis. Yield loss can reach 20–40% in susceptible varieties under high infection pressure. Consult a certified agronomist or agricultural extension officer before applying any chemical treatment."
+  },
+  "Yellow_Rust": {
+    "display_name": "Yellow Rust (Stripe Rust)",
+    "description": "Yellow rust, also called stripe rust, is caused by Puccinia striiformis f. sp. tritici. It spreads rapidly under cool, moist conditions and can cause severe yield losses if untreated.",
+    "causal_agent": "Puccinia striiformis f. sp. tritici (fungus)",
+    "symptoms": [
+      "Pale yellow to bright yellow pustules arranged in characteristic stripes along the leaf veins",
+      "Stripes run parallel to the leaf midrib",
+      "Leaves may turn entirely yellow-brown in severe cases",
+      "White to grey fungal spore masses visible under humid conditions",
+      "Infection can spread to leaf sheaths, glumes, and awns"
+    ],
+    "favourable_conditions": [
+      "Cool temperatures between 7–15°C",
+      "High moisture and dew periods",
+      "Cloudy, humid weather prolonging spore viability",
+      "High-density plantings with poor air circulation"
+    ],
+    "prevention": [
+      "Select certified rust-resistant varieties",
+      "Use treated, disease-free seed",
+      "Sow at recommended times to avoid peak cool-humid periods",
+      "Manage crop density through appropriate seeding rates",
+      "Remove and destroy infected crop debris",
+      "Avoid excess nitrogen fertilisation"
+    ],
+    "management": [
+      "Apply registered foliar fungicides (triazoles or strobilurins) at flag-leaf or early infection stage",
+      "Repeat application as per label instructions if disease pressure persists",
+      "Prioritise treatment of high-value or susceptible fields",
+      "Report new virulent races to local plant protection authorities"
+    ],
+    "severity": "high",
+    "risk_level": "high",
+    "disclaimer": "AI prediction only. Yellow rust can cause yield losses exceeding 70% under epidemic conditions. Seek confirmation from an agricultural extension officer before applying fungicides."
+  },
+  "Stem_Rust": {
+    "display_name": "Stem Rust (Black Rust)",
+    "description": "Stem rust is caused by Puccinia graminis f. sp. tritici. Once a devastating global threat, new virulent races such as Ug99 have re-emerged as serious concerns for wheat production.",
+    "causal_agent": "Puccinia graminis f. sp. tritici (fungus)",
+    "symptoms": [
+      "Large, brick-red to dark brown elongated pustules on stems and leaf sheaths",
+      "Pustules tear through the epidermis, giving a rough, ragged appearance",
+      "Spilled spore masses stain fingers rust-red/brown",
+      "Severely infected stems weaken and lodge (fall over)",
+      "Black teliospores appear late season, giving the 'black rust' appearance"
+    ],
+    "favourable_conditions": [
+      "Warm temperatures 18–30°C",
+      "Humidity and wet weather",
+      "Late-maturing or susceptible varieties",
+      "Proximity to alternate host (barberry plants)"
+    ],
+    "prevention": [
+      "Use resistant varieties (critical first line of defence)",
+      "Eradicate common barberry (alternate host) near fields",
+      "Plant early to avoid peak spore periods",
+      "Monitor for emergence of new races through national surveillance programs"
+    ],
+    "management": [
+      "Foliar fungicide application at early stem rust onset can reduce damage",
+      "Prioritise treatment of susceptible fields",
+      "Report unusual or severe stem rust outbreaks to local authorities immediately",
+      "Consult local extension services for registered fungicide options"
+    ],
+    "severity": "critical",
+    "risk_level": "critical",
+    "disclaimer": "Stem rust is a serious yield-threatening disease. This is an AI prediction, not a diagnosis. Contact your national wheat disease surveillance programme and a certified agronomist immediately if stem rust is suspected."
+  },
+  "Powdery_Mildew": {
+    "display_name": "Powdery Mildew",
+    "description": "Powdery mildew is caused by the obligate biotrophic fungus Blumeria graminis f. sp. tritici. It thrives in dense canopies with moderate temperatures and high humidity.",
+    "causal_agent": "Blumeria graminis f. sp. tritici (fungus)",
+    "symptoms": [
+      "White to greyish powdery fungal colonies on upper leaf surfaces",
+      "Fluffy, superficial mycelium easily wiped off at first but becomes denser",
+      "Yellowing of leaf tissue beneath fungal colonies",
+      "Affected leaves may senesce prematurely",
+      "Small, dark cleistothecia (fruiting bodies) visible in late season"
+    ],
+    "favourable_conditions": [
+      "Dense canopies limiting air flow",
+      "Moderate temperatures 15–22°C",
+      "High humidity without free moisture (unlike rusts)",
+      "Excessive nitrogen fertilisation promoting lush growth"
+    ],
+    "prevention": [
+      "Choose mildew-resistant varieties",
+      "Avoid excessive nitrogen application",
+      "Optimise plant density to improve air circulation",
+      "Use balanced fertilisation (phosphorus and potassium strengthen resistance)"
+    ],
+    "management": [
+      "Apply foliar fungicides at early disease onset",
+      "Triazole-based fungicides are generally effective",
+      "Avoid applications during heavy rain or when crop is moisture-stressed",
+      "Follow resistance management guidelines by rotating fungicide classes"
+    ],
+    "severity": "moderate",
+    "risk_level": "medium",
+    "disclaimer": "AI prediction only. Powdery mildew severity varies widely by variety and environment. Consult an agricultural extension officer before applying fungicide treatments."
+  },
+  "Septoria_Leaf_Blotch": {
+    "display_name": "Septoria Leaf Blotch (STB)",
+    "description": "Septoria tritici blotch is caused by the fungus Zymoseptoria tritici (formerly Mycosphaerella graminicola). It is one of the most economically important foliar diseases of wheat in temperate regions.",
+    "causal_agent": "Zymoseptoria tritici (fungus)",
+    "symptoms": [
+      "Irregular pale to tan-green lesions on leaves",
+      "Lesions bounded by leaf veins, giving a blocky appearance",
+      "Small black dots (pycnidia) visible within lesions — a key diagnostic feature",
+      "Lesions expand and coalesce, covering large leaf areas",
+      "Lower leaves affected first; infection progresses upwards"
+    ],
+    "favourable_conditions": [
+      "Wet, humid weather",
+      "Temperatures 10–25°C",
+      "Rain splash spreading spores between plants",
+      "Extended periods of leaf wetness"
+    ],
+    "prevention": [
+      "Use certified STB-resistant varieties",
+      "Treat seed with fungicide to reduce primary inoculum",
+      "Plough crop residues to reduce spore load",
+      "Avoid dense seeding rates",
+      "Apply nitrogen responsibly"
+    ],
+    "management": [
+      "Apply fungicides at GS31–32 (stem extension) and again at flag-leaf if needed",
+      "Triazole or SDHI-based fungicides show good efficacy",
+      "Timely application is critical — STB is difficult to control once widespread",
+      "Rotate fungicide chemistry to delay resistance development"
+    ],
+    "severity": "high",
+    "risk_level": "high",
+    "disclaimer": "AI prediction only. STB is a major yield-reducing disease in humid climates. Confirm diagnosis with an agronomist and consult local extension recommendations before applying treatments."
+  },
+  "Fusarium_Head_Blight": {
+    "display_name": "Fusarium Head Blight (Scab)",
+    "description": "Fusarium head blight (FHB) is caused primarily by Fusarium graminearum. Beyond yield loss, it contaminates grain with mycotoxins (deoxynivalenol / DON) that are harmful to humans and livestock.",
+    "causal_agent": "Fusarium graminearum and related Fusarium spp. (fungi)",
+    "symptoms": [
+      "Premature bleaching of individual spikelets or partial heads",
+      "Pink to salmon-orange fungal sporulation at the base of bleached spikelets",
+      "Shrivelled, lightweight grain (Fusarium-damaged kernels)",
+      "Brown discolouration of glumes at the infection point",
+      "Entire heads may blight in severe infections"
+    ],
+    "favourable_conditions": [
+      "Warm, wet weather during anthesis (flowering) — critical infection window",
+      "Temperatures 25–30°C during grain fill",
+      "Continuous cereal cropping increasing inoculum levels",
+      "Maize or wheat stubble on field surface"
+    ],
+    "prevention": [
+      "Plant FHB-resistant or tolerant varieties",
+      "Rotate crops to break disease cycles (avoid continuous wheat or wheat after maize)",
+      "Plough in infected crop residues",
+      "Avoid planting in low-lying, poorly drained fields",
+      "Optimise timing of nitrogen to avoid excessive canopy"
+    ],
+    "management": [
+      "Apply registered fungicides at early flowering (GS60–65) for best efficacy",
+      "Triazole fungicides (e.g., tebuconazole) have best label efficacy",
+      "Do not consume or feed suspected mycotoxin-contaminated grain to livestock without testing",
+      "Report confirmed outbreaks to grain buyers and local health authorities"
+    ],
+    "severity": "critical",
+    "risk_level": "critical",
+    "disclaimer": "IMPORTANT: Fusarium head blight can produce mycotoxins hazardous to human and animal health. This is an AI prediction, NOT a confirmed diagnosis or food-safety clearance. Contact an agricultural extension officer and arrange grain mycotoxin testing before use."
+  },
+  "Tan_Spot": {
+    "display_name": "Tan Spot (Yellow Leaf Spot)",
+    "description": "Tan spot is caused by the necrotrophic fungus Pyrenophora tritici-repentis. It is favoured by conservation tillage practices that leave infected residue on the soil surface.",
+    "causal_agent": "Pyrenophora tritici-repentis (fungus)",
+    "symptoms": [
+      "Tan to brown oval or diamond-shaped lesions with a yellow halo",
+      "A distinctive dark-brown centre with a yellow chlorotic zone is characteristic",
+      "Lesions may coalesce causing large necrotic areas",
+      "Lower canopy affected first, progressing upward"
+    ],
+    "favourable_conditions": [
+      "Wet or humid conditions following dry periods",
+      "Infected wheat residue on or near the soil surface",
+      "Minimum or no-till farming systems",
+      "Temperatures 20–28°C"
+    ],
+    "prevention": [
+      "Rotate crops (break the residue inoculum cycle)",
+      "Incorporate residues by tillage where practical",
+      "Use resistant varieties",
+      "Avoid excessive nitrogen that promotes dense canopy"
+    ],
+    "management": [
+      "Apply foliar fungicides at early tillering if disease pressure is high",
+      "Triazole and strobilurin fungicides provide useful control",
+      "Prioritise residue management for long-term control"
+    ],
+    "severity": "moderate",
+    "risk_level": "medium",
+    "disclaimer": "AI prediction only. Consult an agricultural extension officer to confirm diagnosis and recommend appropriate management strategies for local conditions."
+  },
+  "_unknown": {
+    "display_name": "Unknown / Uncertain",
+    "description": "The AI model could not confidently identify a specific wheat disease from the uploaded image.",
+    "symptoms": [],
+    "prevention": [
+      "Upload a clear, well-lit close-up photograph of the affected plant part",
+      "Ensure the image is in focus and shows representative symptoms"
+    ],
+    "management": [
+      "Consult a local agricultural extension officer or certified plant pathologist",
+      "Collect a physical sample for laboratory diagnosis if symptoms persist"
+    ],
+    "severity": "unknown",
+    "risk_level": "unknown",
+    "disclaimer": "The AI model returned a low-confidence prediction. Do not take any management action based solely on this result. Seek expert advice."
+  }
+}

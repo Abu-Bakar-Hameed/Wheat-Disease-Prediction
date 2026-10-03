@@ -1,0 +1,41 @@
+# ── Secrets ─────────────────────────────────────────────────
+# Ignore real env files everywhere, but KEEP the *.example templates
+# so collaborators know which variables to set.
+.env
+.env.local
+.env.*.local
+
+# ── Node / Next.js ──────────────────────────────────────────
+node_modules/
+.next/
+out/
+dist/
+build/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ── Python / FastAPI ────────────────────────────────────────
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.pytest_cache/
+*.egg-info/
+
+# ── ML artifacts & data (large / regenerable) ───────────────
+back/data/
+back/artifacts/
+# Training checkpoints are huge (~46 MB each) and regenerable — keep them out.
+# The runtime model back/models/best_model.pth (15 MB) IS committed on purpose.
+back/models/checkpoints/
+back/notebooks/.ipynb_checkpoints/
+*.log
+logs/
+
+# ── Misc local files ────────────────────────────────────────
+src.zip
+*.tmp
+.DS_Store
+Thumbs.db

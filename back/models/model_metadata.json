@@ -1,0 +1,32 @@
+{
+  "model_version": "1.0.0-20260904054516",
+  "training_date": "2026-09-04T05:45:16.656137",
+  "architecture": "efficientnet_b0",
+  "image_size": 224,
+  "num_classes": 6,
+  "class_names": [
+    "Brown Rust",
+    "Healthy",
+    "Powdery Mildew",
+    "Septoria Leaf Blotch",
+    "Stem rust",
+    "Yellow Rust"
+  ],
+  "epochs_trained": 7,
+  "best_val_loss": 1.910728,
+  "best_val_acc": 40.0,
+  "hyperparameters": {
+    "epochs": 20,
+    "batch_size": 8,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0001,
+    "patience": 5,
+    "use_class_weights": true,
+    "seed": 42
+  },
+  "test_accuracy": 60.0,
+  "test_precision": 62.0,
+  "test_recall": 60.0,
+  "test_f1": 54.33,
+  "test_metrics_source": "scripts/compute_test_metrics.py"
+}
